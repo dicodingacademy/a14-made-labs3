@@ -11,8 +11,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -35,7 +33,7 @@ public class MainActivityIstrumentedTest {
 
     @Test
     public void checkText() {
-        onView(withId(R.id.text_view)).perform(typeText(mActivityRule.getActivity().getString(R.string.start)),closeSoftKeyboard());
+        onView(withId(R.id.text_view)).check(matches(withText(mActivityRule.getActivity().getString(R.string.start))));
 
         onView(withId(R.id.text_view)).check(matches(withText(mActivityRule.getActivity().getString(R.string.finish))));
     }
