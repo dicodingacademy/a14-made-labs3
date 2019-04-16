@@ -38,6 +38,8 @@ public class MainActivityIstrumentedTest {
 
         onView(withText(mActivityRule.getActivity().getString(R.string.start))).perform(click());
 
+        onView(withId(R.id.text_view)).check(matches(withText(mActivityRule.getActivity().getString(R.string.loading))));
+
         onView(withId(R.id.text_view)).check(matches(withText(mActivityRule.getActivity().getString(R.string.finish))));
     }
 }
