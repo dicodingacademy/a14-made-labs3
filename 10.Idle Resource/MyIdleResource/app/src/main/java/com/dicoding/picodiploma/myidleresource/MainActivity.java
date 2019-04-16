@@ -12,12 +12,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        EspressoIdlingResource.increment();
-
+        
         ((TextView) findViewById(R.id.text_view)).setText(getString(R.string.start));
-
-        EspressoIdlingResource.decrement();
 
         EspressoIdlingResource.increment();
 
