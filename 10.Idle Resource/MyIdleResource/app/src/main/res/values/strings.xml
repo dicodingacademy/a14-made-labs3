@@ -2,5 +2,6 @@
     <string name="app_name">MyIdleResource</string>
     <string name="start">Mulai</string>
     <string name="finish">Selesai</string>
+    <string name="loading">Memuat</string>
     <string name="prepare">Persiapan</string>
 </resources>
