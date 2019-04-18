@@ -23,14 +23,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                EspressoIdlingResource.increment();
-
-                delay();
+                delay1();
+                delay2();
             }
         });
     }
 
-    private void delay() {
+    private void delay1() {
+        EspressoIdlingResource.increment();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -41,14 +41,12 @@ public class MainActivity extends AppCompatActivity {
                     EspressoIdlingResource.decrement();
                 }
 
-                EspressoIdlingResource.increment();
-
-                loadData();
             }
         }, 2000);
     }
 
-    private void loadData() {
+    private void delay2() {
+        EspressoIdlingResource.increment();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
