@@ -17,7 +17,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 @RunWith(AndroidJUnit4.class)
-public class MainActivityIstrumentedTest {
+public class MainActivityInstrumentedTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
@@ -38,8 +38,8 @@ public class MainActivityIstrumentedTest {
 
         onView(withText(mActivityRule.getActivity().getString(R.string.start))).perform(click());
 
- //       onView(withId(R.id.text_view)).check(matches(withText(mActivityRule.getActivity().getString(R.string.loading))));
+        //onView(withId(R.id.text_view)).check(matches(withText(mActivityRule.getActivity().getString(R.string.delay1))));
 
-        onView(withId(R.id.text_view)).check(matches(withText(mActivityRule.getActivity().getString(R.string.finish))));
+        onView(withId(R.id.text_view)).check(matches(withText(mActivityRule.getActivity().getString(R.string.delay2))));
     }
 }
