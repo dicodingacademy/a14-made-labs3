@@ -1,12 +1,10 @@
 package com.dicoding.picodiploma.myidleresource;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                textView.setText(getString(R.string.loading));
+                textView.setText(getString(R.string.delay1));
 
                 if (!EspressoIdlingResource.getEspressoIdlingResourcey().isIdleNow()) {
                     //Memberitahukan bahwa tugas sudah selesai dijalankan
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                textView.setText(getString(R.string.finish));
+                textView.setText(getString(R.string.delay2));
 
                 if (!EspressoIdlingResource.getEspressoIdlingResourcey().isIdleNow()) {
                     //Memberitahukan bahwa tugas sudah selesai dijalankan
