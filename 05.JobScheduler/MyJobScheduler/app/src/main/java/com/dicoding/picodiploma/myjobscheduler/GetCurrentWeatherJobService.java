@@ -66,7 +66,7 @@ public class GetCurrentWeatherJobService extends JobService {
         Log.d(TAG, "getCurrentWeather: Mulai.....");
         AsyncHttpClient client = new AsyncHttpClient();
         String url = "http://api.openweathermap.org/data/2.5/weather?q=" + CITY + "&appid=" + APP_ID;
-        Log.e(TAG, "getCurrentWeather: " + url);
+        Log.d(TAG, "getCurrentWeather: " + url);
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
