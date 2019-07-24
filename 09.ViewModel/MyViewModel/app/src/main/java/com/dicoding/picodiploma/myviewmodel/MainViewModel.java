@@ -19,7 +19,7 @@ import cz.msebera.android.httpclient.Header;
  * Created by Gilang on 04/31/2019.
  */
 
-class MainViewModel extends ViewModel {
+public class MainViewModel extends ViewModel {
 
     private static final String API_KEY = "cb744b309dbc7c577fe57bde64e8cf3a";
 
