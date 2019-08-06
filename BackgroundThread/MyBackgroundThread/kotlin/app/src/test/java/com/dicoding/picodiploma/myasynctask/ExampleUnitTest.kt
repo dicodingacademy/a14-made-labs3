@@ -1,8 +1,7 @@
 package com.dicoding.picodiploma.myasynctask
 
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
