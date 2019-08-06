@@ -1,13 +1,10 @@
 package com.dicoding.picodiploma.myasynctask
 
-import android.content.Context
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
-
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Assert.assertEquals
 
 /**
  * [Testing Fundamentals](http://d.android.com/tools/testing/testing_android.html)
