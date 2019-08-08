@@ -1,19 +1,14 @@
 package com.dicoding.picodiploma.myviewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.util.Log
-
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
-
-import org.json.JSONArray
-import org.json.JSONObject
-
-import java.util.ArrayList
-
 import cz.msebera.android.httpclient.Header
+import org.json.JSONObject
+import java.util.*
 
 /**
  * Created by Gilang on 04/31/2019.
@@ -28,7 +23,6 @@ class MainViewModel : ViewModel() {
 
     companion object {
         private const val API_KEY = "MASUKKAN_API_KEY_DISINI"
-//        private const val API_KEY = "cb744b309dbc7c577fe57bde64e8cf3a"
     }
 
     internal fun setWeather(cities: String) {
