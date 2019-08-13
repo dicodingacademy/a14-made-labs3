@@ -4,8 +4,9 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.onComplete
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class OriginService : Service() {
 
@@ -22,18 +23,14 @@ class OriginService : Service() {
 
         Log.d(TAG, "onPreExecute: ")
         Log.d(TAG, "preAsync: Mulai.....")
-        doAsync {
+        GlobalScope.launch {
             Log.d(TAG, "doInBackground: ")
-            try {
-                Thread.sleep(3000)
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            }
-            onComplete {
-                Log.d(TAG, "onPostExecute: ")
-                Log.d(TAG, "postAsync: Selesai.....")
-                stopSelf()
-            }
+
+            delay(3000)
+
+            Log.d(TAG, "onPostExecute: ")
+            Log.d(TAG, "postAsync: Selesai.....")
+            stopSelf()
         }
         return START_STICKY
     }

@@ -9,12 +9,14 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
-import org.jetbrains.anko.doAsync
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -26,15 +28,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val btnOpenDetail:Button = findViewById(R.id.btn_open_detail)
-        btnOpenDetail.setOnClickListener(this)
+        btn_open_detail.setOnClickListener(this)
 
-        doAsync {
-            try {
-                Thread.sleep(3000)
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            }
+        GlobalScope.launch {
+            delay(3000)
             runOnUiThread {
                 // Setelah proses selesai maka tampilkan notification
                 showNotification(this@MainActivity, "Hi, how are you?",
