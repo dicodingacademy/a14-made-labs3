@@ -1,22 +1,19 @@
 package com.dicoding.picodiploma.myviewmodel
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import android.text.TextUtils
 import android.view.View
 import android.widget.EditText
 import android.widget.ProgressBar
-
-import java.util.ArrayList
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: WeatherAdapter
-    private lateinit var edtCity: EditText
-    private lateinit var progressBar: ProgressBar
     private lateinit var mainViewModel: MainViewModel
 
     private val getWeather = Observer<ArrayList<WeatherItems>> { weatherItems ->
@@ -27,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var myListener: View.OnClickListener = View.OnClickListener {
-        val city = edtCity.text.toString()
+        val city = editCity.text.toString()
 
         if (city.isEmpty()) return@OnClickListener
 
@@ -45,12 +42,8 @@ class MainActivity : AppCompatActivity() {
         adapter = WeatherAdapter()
         adapter.notifyDataSetChanged()
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
-
-        edtCity = findViewById(R.id.editCity)
-        progressBar = findViewById(R.id.progressBar)
 
         findViewById<View>(R.id.btnCity).setOnClickListener(myListener)
     }
