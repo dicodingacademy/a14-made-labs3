@@ -10,12 +10,9 @@ import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.picodiploma.myserviceapp.BoundService.MyBinder
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var btnStartService: Button
-    private lateinit var btnStartIntentService: Button
-    private lateinit var btnStartBoundService: Button
-    private lateinit var btnStopBoundService: Button
 
     private var mServiceBound = false
     private lateinit var mBoundService: BoundService
@@ -41,18 +38,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnStartService = findViewById(R.id.btn_start_service)
-        btnStartService.setOnClickListener(this)
+        btn_start_service.setOnClickListener(this)
 
-        btnStartIntentService = findViewById(R.id.btn_start_intent_service)
-        btnStartIntentService.setOnClickListener(this)
+        btn_start_intent_service.setOnClickListener(this)
 
-        btnStartBoundService = findViewById(R.id.btn_start_bound_service)
-        btnStartBoundService.setOnClickListener(this)
+        btn_start_bound_service.setOnClickListener(this)
 
-        btnStopBoundService = findViewById(R.id.btn_stop_bound_service)
-        btnStopBoundService.setOnClickListener(this)
-
+        btn_stop_bound_service.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
