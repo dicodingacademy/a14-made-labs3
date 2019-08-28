@@ -2,7 +2,7 @@ package com.dicoding.picodiploma.myasynctaskwithprogressbar;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,11 +13,11 @@ import java.lang.ref.WeakReference;
 
 public class MainActivity extends AppCompatActivity implements MyAsyncCallback {
 
-    static final String DEMO_ASYNC = "DemoAsyncWithProgress";
+    private static final String DEMO_ASYNC = "DemoAsyncWithProgress";
 
-    Button buttonStart;
-    ProgressBar progressBar;
-    DemoAsync demoAsync;
+    private Button buttonStart;
+    private ProgressBar progressBar;
+    private DemoAsync demoAsync;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements MyAsyncCallback {
     public void onUpdateProgress(long value) {
 
         // Maksimum nilai dari progress nya 10000
-        final Double MAX_PROGRESS = 10000.0;
+        final double MAX_PROGRESS = 10000.0;
 
             /*
             Karena maksimal nilai pada view ProgressBar adalah 100,
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements MyAsyncCallback {
     private static class DemoAsync extends AsyncTask<Void, Long, Void> {
 
         // Penggunaan weakreference disarankan untuk menghindari memory leaks
-        WeakReference<MyAsyncCallback> myListener;
+        final WeakReference<MyAsyncCallback> myListener;
 
         DemoAsync(MyAsyncCallback myListener) {
 
