@@ -50,7 +50,7 @@ public class OriginService extends Service implements DummyAsyncCallback {
 
     private static class DummyAsync extends AsyncTask<Void, Void, Void> {
 
-        final WeakReference<DummyAsyncCallback> callback;
+        private final WeakReference<DummyAsyncCallback> callback;
 
         DummyAsync(DummyAsyncCallback callback) {
             this.callback = new WeakReference<>(callback);
