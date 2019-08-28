@@ -1,7 +1,7 @@
 package com.dicoding.picodiploma.myalarmmanager;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,18 +17,18 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, DatePickerFragment.DialogDateListener, TimePickerFragment.DialogTimeListener {
 
-    TextView tvOnceDate;
-    TextView tvOnceTime;
-    EditText edtOnceMessage;
-    ImageButton btnOnceDate;
-    ImageButton btnOnceTime;
-    Button btnSetOnce;
+    private TextView tvOnceDate;
+    private TextView tvOnceTime;
+    private EditText edtOnceMessage;
+    private ImageButton btnOnceDate;
+    private ImageButton btnOnceTime;
+    private Button btnSetOnce;
 
-    TextView tvRepeatingTime;
-    EditText edtRepeatingMessage;
-    ImageButton  btnRepeatingTime;
-    Button btnSetRepeating;
-    Button btnCancelRepeating;
+    private TextView tvRepeatingTime;
+    private EditText edtRepeatingMessage;
+    private ImageButton  btnRepeatingTime;
+    private Button btnSetRepeating;
+    private Button btnCancelRepeating;
 
     private AlarmReceiver alarmReceiver;
 
@@ -102,6 +102,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_cancel_repeating_alarm:
                 alarmReceiver.cancelAlarm(this, AlarmReceiver.TYPE_REPEATING);
+                break;
+            default:
                 break;
         }
     }
