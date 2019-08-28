@@ -2,7 +2,7 @@ package com.dicoding.picodiploma.myasynctask;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -10,10 +10,10 @@ import java.lang.ref.WeakReference;
 
 public class MainActivity extends AppCompatActivity implements MyAsyncCallback {
 
-    TextView tvStatus;
-    TextView tvDesc;
+    private TextView tvStatus;
+    private TextView tvDesc;
 
-    final static String INPUT_STRING = "Halo Ini Demo AsyncTask!!";
+    private final static String INPUT_STRING = "Halo Ini Demo AsyncTask!!";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +53,12 @@ public class MainActivity extends AppCompatActivity implements MyAsyncCallback {
      */
     private static class DemoAsync extends AsyncTask<String, Void, String> {
 
-        static final String LOG_ASYNC = "DemoAsync";
+        private static final String LOG_ASYNC = "DemoAsync";
 
         // Penggunaan weakreference disarankan untuk menghindari memory leaks
-        WeakReference<MyAsyncCallback> myListener;
+        private final WeakReference<MyAsyncCallback> myListener;
 
-        DemoAsync(MyAsyncCallback myListener) {
+        private DemoAsync(MyAsyncCallback myListener) {
 
             this.myListener = new WeakReference<>(myListener);
 
