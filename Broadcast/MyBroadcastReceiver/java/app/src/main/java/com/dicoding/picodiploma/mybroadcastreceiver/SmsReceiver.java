@@ -10,7 +10,7 @@ import android.util.Log;
 
 public class SmsReceiver extends BroadcastReceiver {
 
-    final String TAG = SmsReceiver.class.getSimpleName();
+    private final String TAG = SmsReceiver.class.getSimpleName();
 
     public SmsReceiver() {
     }
