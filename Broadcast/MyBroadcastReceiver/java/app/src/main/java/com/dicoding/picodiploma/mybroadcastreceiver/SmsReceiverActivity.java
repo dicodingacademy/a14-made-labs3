@@ -1,15 +1,15 @@
 package com.dicoding.picodiploma.mybroadcastreceiver;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class SmsReceiverActivity extends AppCompatActivity implements View.OnClickListener {
-    TextView tvSmsFrom;
-    TextView tvSmsMessage;
-    Button btnClose;
+    private TextView tvSmsFrom;
+    private TextView tvSmsMessage;
+    private Button btnClose;
 
     public static final String EXTRA_SMS_NO = "extra_sms_no";
     public static final String EXTRA_SMS_MESSAGE = "extra_sms_message";
