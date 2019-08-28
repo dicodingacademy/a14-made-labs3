@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.util.Log;
 
 public class CustomIntentService extends IntentService {
-    public static String EXTRA_DURATION = "extra_duration";
-    public static final String TAG = IntentService.class.getSimpleName();
+    public static final String EXTRA_DURATION = "extra_duration";
+    private static final String TAG = IntentService.class.getSimpleName();
 
     public CustomIntentService() {
         super("IntentService");

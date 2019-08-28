@@ -10,11 +10,7 @@ import java.lang.ref.WeakReference;
 
 public class OriginService extends Service implements DummyAsyncCallback {
 
-    static final String TAG = OriginService.class.getSimpleName();
-
-    public OriginService() {
-
-    }
+    private static final String TAG = OriginService.class.getSimpleName();
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -54,7 +50,7 @@ public class OriginService extends Service implements DummyAsyncCallback {
 
     private static class DummyAsync extends AsyncTask<Void, Void, Void> {
 
-        WeakReference<DummyAsyncCallback> callback;
+        final WeakReference<DummyAsyncCallback> callback;
 
         DummyAsync(DummyAsyncCallback callback) {
             this.callback = new WeakReference<>(callback);
