@@ -11,8 +11,8 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,15 +25,12 @@ import java.util.Locale;
 public class AlarmReceiver extends BroadcastReceiver {
     public static final String TYPE_ONE_TIME = "OneTimeAlarm";
     public static final String TYPE_REPEATING = "RepeatingAlarm";
-    public static final String EXTRA_MESSAGE = "message";
-    public static final String EXTRA_TYPE = "type";
+    private static final String EXTRA_MESSAGE = "message";
+    private static final String EXTRA_TYPE = "type";
 
     // Siapkan 2 id untuk 2 macam alarm, onetime dna repeating
     private final static int ID_ONETIME = 100;
     private final static int ID_REPEATING = 101;
-
-    public AlarmReceiver() {
-    }
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -43,10 +40,10 @@ public class AlarmReceiver extends BroadcastReceiver {
         String title = type.equalsIgnoreCase(TYPE_ONE_TIME) ? TYPE_ONE_TIME : TYPE_REPEATING;
         int notifId = type.equalsIgnoreCase(TYPE_ONE_TIME) ? ID_ONETIME : ID_REPEATING;
 
-        showToast(context, title, message);
+        //Jika Anda ingin menampilkan dengan Toast anda bisa menghilangkan komentar pada baris dibawah ini.
+        //showToast(context, title, message);
 
-		//Jika Anda ingin menampilkan dengan Notif anda bisa menghilangkan komentar pada baris dibawah ini.
-        //showAlarmNotification(context, title, message, notifId);
+        showAlarmNotification(context, title, message, notifId);
     }
 
     // Gunakan metode ini untuk menampilkan toast
@@ -112,8 +109,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         intent.putExtra(EXTRA_TYPE, type);
 
         Log.e("ONE TIME", date + " " + time);
-        String dateArray[] = date.split("-");
-        String timeArray[] = time.split(":");
+        String[] dateArray = date.split("-");
+        String[] timeArray = time.split(":");
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, Integer.parseInt(dateArray[0]));
@@ -142,7 +139,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         intent.putExtra(EXTRA_MESSAGE, message);
         intent.putExtra(EXTRA_TYPE, type);
 
-        String timeArray[] = time.split(":");
+        String[] timeArray = time.split(":");
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArray[0]));
@@ -185,7 +182,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     private final static String TIME_FORMAT = "HH:mm";
 
     // Metode ini digunakan untuk validasi date dan time
-    public boolean isDateInvalid(String date, String format) {
+    private boolean isDateInvalid(String date, String format) {
         try {
             DateFormat df = new SimpleDateFormat(format, Locale.getDefault());
             df.setLenient(false);
