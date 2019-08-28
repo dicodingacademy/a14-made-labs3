@@ -9,8 +9,8 @@ import android.content.Context;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -28,13 +28,13 @@ import cz.msebera.android.httpclient.Header;
 
 public class GetCurrentWeatherJobService extends JobService {
 
-    public static final String TAG = GetCurrentWeatherJobService.class.getSimpleName();
+    private static final String TAG = GetCurrentWeatherJobService.class.getSimpleName();
 
-    final String APP_ID = "93a3696714297ee5a9f65486aa8cb824";
+    private final String APP_ID = "93a3696714297ee5a9f65486aa8cb824";
 
     //private final String CITY = "ISIKAN DENGAN NAMA KOTA KAMU";
 
-    final String CITY = "Jakarta";
+    private final String CITY = "Jakarta";
 
     /**
      * onStartJob berjalan di dalam mainthread, return true jika ada proses yang membuat thread baru
