@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private boolean mServiceBound = false;
-    private BoundService mBoundService;
 
     /*
     Service Connection adalah interface yang digunakan untuk menghubungkan antara boundservice dengan activity
@@ -86,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             MyBinder myBinder = (MyBinder) service;
-            mBoundService = myBinder.getService();
+            myBinder.getService();
             mServiceBound = true;
         }
 
