@@ -9,15 +9,15 @@ import android.util.Log;
 
 public class BoundService extends Service {
 
-    final String TAG = BoundService.class.getSimpleName();
-    MyBinder mBinder = new MyBinder();
-    final long startTime = System.currentTimeMillis();
+    private final String TAG = BoundService.class.getSimpleName();
+    private final MyBinder mBinder = new MyBinder();
+    private final long startTime = System.currentTimeMillis();
 
     /*
     Countdown timer akan berjalan sampai 100000 milisecond,
     dengan interval setiap 1000 milisecond akan menampilkan log
      */
-    CountDownTimer mTimer = new CountDownTimer(100000, 1000) {
+    private final CountDownTimer mTimer = new CountDownTimer(100000, 1000) {
         @Override
         public void onTick(long l) {
 
@@ -30,9 +30,6 @@ public class BoundService extends Service {
 
         }
     };
-
-    public BoundService() {
-    }
 
     @Override
     public void onCreate() {
@@ -78,7 +75,7 @@ public class BoundService extends Service {
         Log.d(TAG, "onRebind: ");
     }
 
-    class MyBinder extends Binder {
+    public class MyBinder extends Binder {
         BoundService getService() {
             return BoundService.this;
         }
