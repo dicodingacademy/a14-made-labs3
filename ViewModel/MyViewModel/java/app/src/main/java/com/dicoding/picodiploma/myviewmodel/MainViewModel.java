@@ -1,8 +1,8 @@
 package com.dicoding.picodiploma.myviewmodel;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -23,9 +23,9 @@ public class MainViewModel extends ViewModel {
 
     private static final String API_KEY = "cb744b309dbc7c577fe57bde64e8cf3a";
 
-    private MutableLiveData<ArrayList<WeatherItems>> listWeathers = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<WeatherItems>> listWeathers = new MutableLiveData<>();
 
-    void setWeather(final String cities) {
+    public void setWeather(final String cities) {
         AsyncHttpClient client = new AsyncHttpClient();
         final ArrayList<WeatherItems> listItems = new ArrayList<>();
         String url = "https://api.openweathermap.org/data/2.5/group?id=" + cities + "&units=metric&appid=" + API_KEY;

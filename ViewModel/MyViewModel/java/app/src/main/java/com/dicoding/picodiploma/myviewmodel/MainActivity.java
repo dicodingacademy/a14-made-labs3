@@ -1,11 +1,11 @@
 package com.dicoding.picodiploma.myviewmodel;
 
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btnCity).setOnClickListener(myListener);
     }
 
-    private Observer<ArrayList<WeatherItems>> getWeather = new Observer<ArrayList<WeatherItems>>() {
+    private final Observer<ArrayList<WeatherItems>> getWeather = new Observer<ArrayList<WeatherItems>>() {
         @Override
         public void onChanged(ArrayList<WeatherItems> weatherItems) {
             if (weatherItems != null) {
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    View.OnClickListener myListener = new View.OnClickListener() {
+    private final View.OnClickListener myListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             String city = edtCity.getText().toString();
