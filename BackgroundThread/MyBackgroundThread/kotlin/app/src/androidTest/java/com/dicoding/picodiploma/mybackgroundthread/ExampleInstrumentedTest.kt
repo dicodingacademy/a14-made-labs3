@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.myasynctask
+package com.dicoding.picodiploma.mybackgroundthread
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4

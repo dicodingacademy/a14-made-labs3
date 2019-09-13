@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.myasynctask
+package com.dicoding.picodiploma.mybackgroundthread
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

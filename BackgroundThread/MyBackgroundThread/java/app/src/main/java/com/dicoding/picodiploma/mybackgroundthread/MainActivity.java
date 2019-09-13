@@ -1,4 +1,4 @@
-package com.dicoding.picodiploma.myasynctask;
+package com.dicoding.picodiploma.mybackgroundthread;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -59,9 +59,7 @@ public class MainActivity extends AppCompatActivity implements MyAsyncCallback {
         private final WeakReference<MyAsyncCallback> myListener;
 
         private DemoAsync(MyAsyncCallback myListener) {
-
             this.myListener = new WeakReference<>(myListener);
-
         }
 
         /*
@@ -78,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements MyAsyncCallback {
             if (myListener != null) {
                 myListener.onPreExecute();
             }
+
+
         }
 
         /*
@@ -103,10 +103,10 @@ public class MainActivity extends AppCompatActivity implements MyAsyncCallback {
 
 
                 /*
-                Sleep thread digunakan untuk simulasi bahwa ada proses yang sedang berjalan selama 5 detik
-                5000 miliseconds = 5 detik
+                Sleep thread digunakan untuk simulasi bahwa ada proses yang sedang berjalan selama 2 detik
+                2000 miliseconds = 2 detik
                 */
-                Thread.sleep(5000);
+                Thread.sleep(2000);
 
             } catch (Exception e) {
                 Log.d(LOG_ASYNC, e.getMessage());
@@ -130,5 +130,8 @@ public class MainActivity extends AppCompatActivity implements MyAsyncCallback {
             }
         }
     }
-
+}
+interface MyAsyncCallback {
+    void onPreExecute();
+    void onPostExecute(String text);
 }
