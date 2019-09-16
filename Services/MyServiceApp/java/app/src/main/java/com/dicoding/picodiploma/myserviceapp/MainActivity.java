@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.dicoding.picodiploma.myserviceapp.BoundService.MyBinder;
+import com.dicoding.picodiploma.myserviceapp.MyBoundService.MyBinder;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -36,18 +36,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_start_service:
-                Intent mStartServiceIntent = new Intent(MainActivity.this, OriginService.class);
+                Intent mStartServiceIntent = new Intent(MainActivity.this, MyService.class);
                 startService(mStartServiceIntent);
                 break;
 
             case R.id.btn_start_intent_service:
-                Intent mStartIntentService = new Intent(MainActivity.this, CustomIntentService.class);
-                mStartIntentService.putExtra(CustomIntentService.EXTRA_DURATION, 5000);
+                Intent mStartIntentService = new Intent(MainActivity.this, MyIntentService.class);
+                mStartIntentService.putExtra(MyIntentService.EXTRA_DURATION, 5000L);
                 startService(mStartIntentService);
                 break;
 
             case R.id.btn_start_bound_service:
-                Intent mBoundServiceIntent = new Intent(MainActivity.this, BoundService.class);
+                Intent mBoundServiceIntent = new Intent(MainActivity.this, MyBoundService.class);
                 bindService(mBoundServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
                 break;
 
@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 unbindService(mServiceConnection);
                 break;
         }
-
     }
 
     @Override

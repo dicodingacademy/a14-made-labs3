@@ -18,13 +18,13 @@
         </activity>
 
         <service
-            android:name=".OriginService"
+            android:name=".MyService"
             android:enabled="true" />
         <service
-            android:name=".CustomIntentService"
+            android:name=".MyIntentService"
             android:exported="false" />
         <service
-            android:name=".BoundService"
+            android:name=".MyBoundService"
             android:enabled="true"
             android:exported="true" />
     </application>

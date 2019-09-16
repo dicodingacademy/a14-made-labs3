@@ -8,10 +8,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class OriginService : Service() {
+class MyService : Service() {
 
     companion object {
-        internal val TAG = OriginService::class.java.simpleName
+        internal val TAG = MyService::class.java.simpleName
     }
 
     override fun onBind(intent: Intent): IBinder? {
@@ -19,18 +19,11 @@ class OriginService : Service() {
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        Log.d(TAG, "onStartCommand: ")
-
-        Log.d(TAG, "onPreExecute: ")
-        Log.d(TAG, "preAsync: Mulai.....")
+        Log.d(TAG, "Service dijalankan...")
         GlobalScope.launch {
-            Log.d(TAG, "doInBackground: ")
-
             delay(3000)
-
-            Log.d(TAG, "onPostExecute: ")
-            Log.d(TAG, "postAsync: Selesai.....")
             stopSelf()
+            Log.d(TAG, "Service dihentikan")
         }
         return START_STICKY
     }

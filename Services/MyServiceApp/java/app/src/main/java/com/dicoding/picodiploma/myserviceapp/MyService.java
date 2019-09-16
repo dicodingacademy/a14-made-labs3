@@ -8,9 +8,10 @@ import android.util.Log;
 
 import java.lang.ref.WeakReference;
 
-public class OriginService extends Service implements DummyAsyncCallback {
+//langkah 2 : implement interface dan implement method preAsync dan postAsync
+public class MyService extends Service implements DummyAsyncCallback {
 
-    private static final String TAG = OriginService.class.getSimpleName();
+    private static final String TAG = MyService.class.getSimpleName();
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -19,8 +20,9 @@ public class OriginService extends Service implements DummyAsyncCallback {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "onStartCommand: ");
+        Log.d(TAG, "Service dijalankan...");
 
+        //langkah 4 : inisialisasi dan jalankan AsyncTask
         DummyAsync dummyAsync = new DummyAsync(this);
         dummyAsync.execute();
 
@@ -33,21 +35,19 @@ public class OriginService extends Service implements DummyAsyncCallback {
         Log.d(TAG, "onDestroy: ");
     }
 
+    //langkah 5 : tambahkan aksi di callback
     @Override
     public void preAsync() {
-        // do nothing
-
         Log.d(TAG, "preAsync: Mulai.....");
     }
 
     @Override
     public void postAsync() {
-
-        // Pemanggilan stopSelf akan menghentikan service
         Log.d(TAG, "postAsync: Selesai.....");
         stopSelf();
     }
 
+    //langkah 3 : buat AsyncTask dan WeakReference
     private static class DummyAsync extends AsyncTask<Void, Void, Void> {
 
         private final WeakReference<DummyAsyncCallback> callback;
@@ -61,7 +61,6 @@ public class OriginService extends Service implements DummyAsyncCallback {
             super.onPreExecute();
             Log.d(TAG, "onPreExecute: ");
             callback.get().preAsync();
-
         }
 
         @Override
@@ -84,13 +83,8 @@ public class OriginService extends Service implements DummyAsyncCallback {
     }
 }
 
-
-/*
-Callback ke kelas DummyAsync
- */
+//langkah 1 : buat interface
 interface DummyAsyncCallback {
-
     void preAsync();
-
     void postAsync();
 }

@@ -4,11 +4,11 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
-public class CustomIntentService extends IntentService {
+public class MyIntentService extends IntentService {
     public static final String EXTRA_DURATION = "extra_duration";
-    private static final String TAG = IntentService.class.getSimpleName();
+    private static final String TAG = MyIntentService.class.getSimpleName();
 
-    public CustomIntentService() {
+    public MyIntentService() {
         super("IntentService");
     }
 
@@ -16,7 +16,7 @@ public class CustomIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d(TAG, "onHandleIntent: Mulai.....");
         if (intent != null) {
-            int duration = intent.getIntExtra(EXTRA_DURATION, 0);
+            long duration = intent.getLongExtra(EXTRA_DURATION, 0);
             try {
                 Thread.sleep(duration);
                 Log.d(TAG, "onHandleIntent: Selesai.....");

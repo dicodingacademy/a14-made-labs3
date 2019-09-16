@@ -7,15 +7,14 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.view.View
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.dicoding.picodiploma.myserviceapp.BoundService.MyBinder
+import com.dicoding.picodiploma.myserviceapp.MyBoundService.MyBinder
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private var mServiceBound = false
-    private lateinit var mBoundService: BoundService
+    private lateinit var mBoundService: MyBoundService
 
     /*
     Service Connection adalah interface yang digunakan untuk menghubungkan antara boundservice dengan activity
@@ -28,7 +27,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         override fun onServiceConnected(name: ComponentName, service: IBinder) {
             val myBinder = service as MyBinder
-            mBoundService = myBinder.service
+            mBoundService = myBinder.getService
             mServiceBound = true
         }
 
@@ -50,18 +49,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.btn_start_service -> {
-                val mStartServiceIntent = Intent(this@MainActivity, OriginService::class.java)
+                val mStartServiceIntent = Intent(this@MainActivity, MyService::class.java)
                 startService(mStartServiceIntent)
             }
 
             R.id.btn_start_intent_service -> {
-                val mStartIntentService = Intent(this@MainActivity, CustomIntentService::class.java)
-                mStartIntentService.putExtra(CustomIntentService.EXTRA_DURATION, 5000)
+                val mStartIntentService = Intent(this@MainActivity, MyIntentService::class.java)
+                mStartIntentService.putExtra(MyIntentService.EXTRA_DURATION, 5000L)
                 startService(mStartIntentService)
             }
 
             R.id.btn_start_bound_service -> {
-                val mBoundServiceIntent = Intent(this@MainActivity, BoundService::class.java)
+                val mBoundServiceIntent = Intent(this@MainActivity, MyBoundService::class.java)
                 bindService(mBoundServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE)
             }
 

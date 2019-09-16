@@ -7,14 +7,14 @@ import android.os.CountDownTimer
 import android.os.IBinder
 import android.util.Log
 
-class BoundService : Service() {
+class MyBoundService : Service() {
 
+    companion object {
+        private val TAG = MyBoundService::class.java.simpleName
+    }
     private var mBinder = MyBinder()
     private val startTime = System.currentTimeMillis()
 
-    companion object {
-        private val TAG = BoundService::class.java.simpleName
-    }
     /*
     Countdown timer akan berjalan sampai 100000 milisecond,
     dengan interval setiap 1000 milisecond akan menampilkan log
@@ -70,7 +70,6 @@ class BoundService : Service() {
     }
 
     internal inner class MyBinder : Binder() {
-        val service: BoundService
-            get() = this@BoundService
+        val getService: MyBoundService = this@MyBoundService
     }
 }

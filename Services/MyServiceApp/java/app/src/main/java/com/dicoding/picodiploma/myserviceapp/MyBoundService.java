@@ -7,9 +7,9 @@ import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.util.Log;
 
-public class BoundService extends Service {
+public class MyBoundService extends Service {
 
-    private final String TAG = BoundService.class.getSimpleName();
+    private final String TAG = MyBoundService.class.getSimpleName();
     private final MyBinder mBinder = new MyBinder();
     private final long startTime = System.currentTimeMillis();
 
@@ -76,8 +76,8 @@ public class BoundService extends Service {
     }
 
     public class MyBinder extends Binder {
-        BoundService getService() {
-            return BoundService.this;
+        MyBoundService getService() {
+            return MyBoundService.this;
         }
     }
 }

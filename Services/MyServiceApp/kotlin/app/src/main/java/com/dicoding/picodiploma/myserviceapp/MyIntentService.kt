@@ -4,7 +4,7 @@ import android.app.IntentService
 import android.content.Intent
 import android.util.Log
 
-class CustomIntentService : IntentService("IntentService") {
+class MyIntentService : IntentService("MyIntentService") {
 
     companion object {
         internal const val EXTRA_DURATION = "extra_duration"
@@ -13,9 +13,9 @@ class CustomIntentService : IntentService("IntentService") {
 
     override fun onHandleIntent(intent: Intent?) {
         Log.d(TAG, "onHandleIntent: Mulai.....")
-        val duration = intent?.getIntExtra(EXTRA_DURATION, 0)
+        val duration = intent?.getLongExtra(EXTRA_DURATION, 0) as Long
         try {
-            duration?.toLong()?.let { Thread.sleep(it) }
+            Thread.sleep(duration)
             Log.d(TAG, "onHandleIntent: Selesai.....")
         } catch (e: InterruptedException) {
             e.printStackTrace()
