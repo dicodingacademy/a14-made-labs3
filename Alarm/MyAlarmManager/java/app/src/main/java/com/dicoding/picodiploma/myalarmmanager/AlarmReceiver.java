@@ -28,7 +28,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     private static final String EXTRA_MESSAGE = "message";
     private static final String EXTRA_TYPE = "type";
 
-    // Siapkan 2 id untuk 2 macam alarm, onetime dna repeating
+    // Siapkan 2 id untuk 2 macam alarm, onetime dan repeating
     private final static int ID_ONETIME = 100;
     private final static int ID_REPEATING = 101;
 

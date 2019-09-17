@@ -25,15 +25,13 @@ class AlarmReceiver : BroadcastReceiver() {
         const val EXTRA_MESSAGE = "message"
         const val EXTRA_TYPE = "type"
 
-        // Siapkan 2 id untuk 2 macam alarm, onetime dna repeating
+        // Siapkan 2 id untuk 2 macam alarm, onetime dan repeating
         private const val ID_ONETIME = 100
         private const val ID_REPEATING = 101
 
         private const val DATE_FORMAT = "yyyy-MM-dd"
         private const val TIME_FORMAT = "HH:mm"
 
-        private const val CHANNEL_ID = "Channel_1"
-        private const val CHANNEL_NAME = "AlarmManager channel"
     }
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -44,9 +42,9 @@ class AlarmReceiver : BroadcastReceiver() {
         val notifId = if (type.equals(TYPE_ONE_TIME, ignoreCase = true)) ID_ONETIME else ID_REPEATING
 
         //Jika Anda ingin menampilkan dengan toast anda bisa menghilangkan komentar pada baris dibawah ini.
-        //showToast(context, title, message)
+//        showToast(context, title, message)
 
-        showAlarmNotification(context, title, message, notifId);
+        showAlarmNotification(context, title, message, notifId)
     }
 
     // Gunakan metode ini untuk menampilkan toast
@@ -57,6 +55,10 @@ class AlarmReceiver : BroadcastReceiver() {
 
     // Gunakan metode ini untuk menampilkan notifikasi
     private fun showAlarmNotification(context: Context, title: String, message: String, notifId: Int) {
+
+        val CHANNEL_ID = "Channel_1"
+        val CHANNEL_NAME = "AlarmManager channel"
+
         val notificationManagerCompat = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
@@ -105,8 +107,8 @@ class AlarmReceiver : BroadcastReceiver() {
         intent.putExtra(EXTRA_TYPE, type)
 
         Log.e("ONE TIME", "$date $time")
-        val dateArray = date.split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        val timeArray = time.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+        val dateArray = date.split("-").toTypedArray()
+        val timeArray = time.split(":").toTypedArray()
 
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.YEAR, Integer.parseInt(dateArray[0]))
