@@ -19,9 +19,9 @@ public class SmsReceiverActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sms_receiver);
 
-        setTitle("Incoming Message");
+        setTitle(getString(R.string.incoming_message));
 
-        tvSmsFrom = findViewById(R.id.tv_no);
+        tvSmsFrom = findViewById(R.id.tv_from);
         tvSmsMessage = findViewById(R.id.tv_message);
         btnClose = findViewById(R.id.btn_close);
         btnClose.setOnClickListener(this);

@@ -17,8 +17,8 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener {
 
-    private Button btnDownload;
     private Button btnCheckPermission;
+    private Button btnDownload;
 
     public static final String ACTION_DOWNLOAD_STATUS = "download_status";
     private BroadcastReceiver downloadReceiver;
@@ -28,10 +28,11 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnDownload = findViewById(R.id.btn_download);
         btnCheckPermission = findViewById(R.id.btn_permission);
-        btnDownload.setOnClickListener(this);
+        btnDownload = findViewById(R.id.btn_download);
+
         btnCheckPermission.setOnClickListener(this);
+        btnDownload.setOnClickListener(this);
 
         downloadReceiver = new BroadcastReceiver() {
             @Override

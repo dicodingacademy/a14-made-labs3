@@ -6,4 +6,5 @@
     <string name="this_play">Oii, main kesini jadi ngga? sekarang yak.</string>
     <string name="close">Tutup</string>
     <string name="check_sms_permission">Check SMS Permission</string>
+    <string name="incoming_message">Incoming Message</string>
 </resources>

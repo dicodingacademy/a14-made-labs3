@@ -5,11 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_sms_receiver.*
 
 class SmsReceiverActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var tvSmsFrom: TextView
-    private lateinit var tvSmsMessage: TextView
-    private lateinit var btnClose: Button
 
     companion object {
         const val EXTRA_SMS_NO = "extra_sms_no"
@@ -20,18 +18,15 @@ class SmsReceiverActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sms_receiver)
 
-        title = "Incoming Message"
+        title = getString(R.string.incoming_message)
 
-        tvSmsFrom = findViewById(R.id.tv_no)
-        tvSmsMessage = findViewById(R.id.tv_message)
-        btnClose = findViewById(R.id.btn_close)
-        btnClose.setOnClickListener(this)
+        btn_close.setOnClickListener(this)
 
         val senderNo = intent.getStringExtra(EXTRA_SMS_NO)
         val senderMessage = intent.getStringExtra(EXTRA_SMS_MESSAGE)
 
-        tvSmsFrom.text = getString(R.string.from, senderNo)
-        tvSmsMessage.text = senderMessage
+        tv_from.text = getString(R.string.from, senderNo)
+        tv_message.text = senderMessage
     }
 
     override fun onClick(v: View) {

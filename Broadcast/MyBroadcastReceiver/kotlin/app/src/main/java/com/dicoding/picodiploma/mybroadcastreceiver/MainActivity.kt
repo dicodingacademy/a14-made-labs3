@@ -12,26 +12,23 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-
-    private lateinit var btnDownload: Button
-    private lateinit var btnCheckPermission: Button
-    private lateinit var downloadReceiver: BroadcastReceiver
 
     companion object {
         const val ACTION_DOWNLOAD_STATUS = "download_status"
         private const val SMS_REQUEST_CODE = 101
     }
 
+    private lateinit var downloadReceiver: BroadcastReceiver
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnDownload = findViewById(R.id.btn_download)
-        btnCheckPermission = findViewById(R.id.btn_permission)
-        btnDownload.setOnClickListener(this)
-        btnCheckPermission.setOnClickListener(this)
+        btn_permission.setOnClickListener(this)
+        btn_download.setOnClickListener(this)
 
         downloadReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
@@ -40,7 +37,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
         val downloadIntentFilter = IntentFilter(ACTION_DOWNLOAD_STATUS)
-
         registerReceiver(downloadReceiver, downloadIntentFilter)
     }
 

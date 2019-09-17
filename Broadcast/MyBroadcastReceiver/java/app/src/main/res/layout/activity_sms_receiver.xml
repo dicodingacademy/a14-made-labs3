@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context="com.dicoding.picodiploma.mybroadcastreceiver.SmsReceiverActivity">
     <TextView
-        android:id="@+id/tv_no"
+        android:id="@+id/tv_from"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/coming_from"

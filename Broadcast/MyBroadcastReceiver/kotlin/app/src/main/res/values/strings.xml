@@ -7,4 +7,5 @@
     <string name="close">Tutup</string>
     <string name="check_sms_permission">Check SMS Permission</string>
     <string name="from">from : %s</string>
+    <string name="incoming_message">Incoming Message</string>
 </resources>
