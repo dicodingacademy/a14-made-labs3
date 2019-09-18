@@ -27,9 +27,6 @@ class GetCurrentWeatherJobService : JobService() {
         //internal const val CITY = "ISIKAN DENGAN NAMA KOTA KAMU"
         internal const val CITY = "Jakarta"
         internal const val APP_ID = "93a3696714297ee5a9f65486aa8cb824"
-
-        private const val CHANNEL_ID = "Channel_1"
-        private const val CHANNEL_NAME = "Job scheduler channel"
     }
 
     /**
@@ -116,6 +113,9 @@ class GetCurrentWeatherJobService : JobService() {
      * @param notifId id notifikasi
      */
     private fun showNotification(context: Context, title: String, message: String, notifId: Int) {
+        val CHANNEL_ID = "Channel_1"
+        val CHANNEL_NAME = "Job scheduler channel"
+
         val notificationManagerCompat = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)

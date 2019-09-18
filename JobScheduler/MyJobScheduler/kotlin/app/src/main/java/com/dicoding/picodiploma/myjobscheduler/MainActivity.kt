@@ -10,10 +10,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var btnStart: Button
-    private lateinit var btnCancel: Button
 
     companion object {
         private const val JOB_ID = 10
@@ -23,11 +22,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnStart = findViewById(R.id.btn_start)
-        btnCancel = findViewById(R.id.btn_cancel)
-
-        btnStart.setOnClickListener(this)
-        btnCancel.setOnClickListener(this)
+        btn_start.setOnClickListener(this)
+        btn_cancel.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
