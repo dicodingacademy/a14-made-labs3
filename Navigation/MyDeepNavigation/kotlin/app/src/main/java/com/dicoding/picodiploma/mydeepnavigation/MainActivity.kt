@@ -14,30 +14,17 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    companion object{
-        private const val CHANNEL_ID = "Channel_1"
-        private const val CHANNEL_NAME = "Navigation channel"
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         btn_open_detail.setOnClickListener(this)
 
-        GlobalScope.launch {
-            delay(3000)
-            runOnUiThread {
-                // Setelah proses selesai maka tampilkan notification
-                showNotification(this@MainActivity, "Hi, how are you?",
-                        "Do you have any plan this weekend? Let's hangout", 110)
-            }
-        }
+        showNotification(this@MainActivity, getString(R.string.notification_title), getString(R.string.notification_message), 110)
+
     }
 
 
@@ -47,8 +34,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Intent yang akan dikirimkan ke halaman detail
              */
             val detailIntent = Intent(this@MainActivity, DetailActivity::class.java)
-            detailIntent.putExtra(DetailActivity.EXTRA_TITLE, "Hola, Good News")
-            detailIntent.putExtra(DetailActivity.EXTRA_MESSAGE, "Now you can learn android in Dicoding")
+            detailIntent.putExtra(DetailActivity.EXTRA_TITLE, getString(R.string.detail_title))
+            detailIntent.putExtra(DetailActivity.EXTRA_MESSAGE, getString(R.string.detail_message))
             startActivity(detailIntent)
         }
     }
@@ -62,6 +49,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
      * @param notifId id dari notifikasi
      */
     private fun showNotification(context: Context, title: String, message: String, notifId: Int) {
+        val CHANNEL_ID = "Channel_1"
+        val CHANNEL_NAME = "Navigation channel"
+
         val notifDetailIntent = Intent(this, DetailActivity::class.java)
         /*
         Intent yang akan dikirimkan ke halaman detail

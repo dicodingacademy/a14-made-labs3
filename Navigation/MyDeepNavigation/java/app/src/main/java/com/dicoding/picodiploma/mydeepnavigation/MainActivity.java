@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.core.app.NotificationCompat;
@@ -18,9 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import java.lang.ref.WeakReference;
-
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, AsyncCallback {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button btnOpenDetail = findViewById(R.id.btn_open_detail);
         btnOpenDetail.setOnClickListener(this);
 
-        DelayAsync delayAsync = new DelayAsync(this);
-        delayAsync.execute();
+        showNotification(MainActivity.this, getResources().getString(R.string.notification_title), getResources().getString(R.string.notification_message), 110);
 
     }
 
@@ -43,49 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent yang akan dikirimkan ke halaman detail
              */
             Intent detailIntent = new Intent(MainActivity.this, DetailActivity.class);
-            detailIntent.putExtra(DetailActivity.EXTRA_TITLE, "Hola, Good News");
-            detailIntent.putExtra(DetailActivity.EXTRA_MESSAGE, "Now you can learn android in Dicoding");
+            detailIntent.putExtra(DetailActivity.EXTRA_TITLE, getString(R.string.detail_title));
+            detailIntent.putExtra(DetailActivity.EXTRA_MESSAGE, getString(R.string.detail_message));
             startActivity(detailIntent);
-        }
-    }
-
-    @Override
-    public void postAsync() {
-
-        // Setelah proses selesai maka tampilkan notification
-        showNotification(MainActivity.this, "Hi, how are you?",
-                "Do you have any plan this weekend? Let's hangout", 110);
-    }
-
-    /*
-    Flow yang akan dijalankan
-    Flow : Activity->AsyncTask->Notifikasi->HalamanDetail
-     */
-    private static class DelayAsync extends AsyncTask<Void, Void, Void> {
-
-        final WeakReference<AsyncCallback> callback;
-
-        DelayAsync(AsyncCallback callback) {
-
-            this.callback = new WeakReference<>(callback);
-
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            callback.get().postAsync();
         }
     }
 
@@ -154,9 +110,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
-}
-
-
-interface AsyncCallback {
-    void postAsync();
 }
