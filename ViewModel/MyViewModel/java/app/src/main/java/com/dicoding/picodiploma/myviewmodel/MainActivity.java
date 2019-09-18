@@ -3,6 +3,7 @@ package com.dicoding.picodiploma.myviewmodel;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private WeatherAdapter adapter;
     private EditText edtCity;
     private ProgressBar progressBar;
+    private Button btnCity;
 
     private MainViewModel mainViewModel;
 
@@ -26,43 +28,40 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mainViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MainViewModel.class);
-        mainViewModel.getWeathers().observe(this, getWeather);
-
-        adapter = new WeatherAdapter();
-        adapter.notifyDataSetChanged();
+        edtCity = findViewById(R.id.editCity);
+        progressBar = findViewById(R.id.progressBar);
+        btnCity = findViewById(R.id.btnCity);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new WeatherAdapter();
+        adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
 
-        edtCity = findViewById(R.id.editCity);
-        progressBar = findViewById(R.id.progressBar);
+        mainViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MainViewModel.class);
 
-        findViewById(R.id.btnCity).setOnClickListener(myListener);
-    }
+        btnCity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String city = edtCity.getText().toString();
 
-    private final Observer<ArrayList<WeatherItems>> getWeather = new Observer<ArrayList<WeatherItems>>() {
-        @Override
-        public void onChanged(ArrayList<WeatherItems> weatherItems) {
-            if (weatherItems != null) {
-                adapter.setData(weatherItems);
-                showLoading(false);
+                if (TextUtils.isEmpty(city)) return;
+
+                mainViewModel.setWeather(city);
+                showLoading(true);
             }
-        }
-    };
+        });
 
-    private final View.OnClickListener myListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            String city = edtCity.getText().toString();
-
-            if (TextUtils.isEmpty(city)) return;
-
-            mainViewModel.setWeather(city);
-            showLoading(true);
-        }
-    };
+        mainViewModel.getWeathers().observe(this, new Observer<ArrayList<WeatherItems>>() {
+            @Override
+            public void onChanged(ArrayList<WeatherItems> weatherItems) {
+                if (weatherItems != null) {
+                    adapter.setData(weatherItems);
+                    showLoading(false);
+                }
+            }
+        });
+    }
 
     private void showLoading(Boolean state) {
         if (state) {

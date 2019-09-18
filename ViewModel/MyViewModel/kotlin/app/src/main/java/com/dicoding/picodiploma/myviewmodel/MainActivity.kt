@@ -2,43 +2,19 @@ package com.dicoding.picodiploma.myviewmodel
 
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
-import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: WeatherAdapter
     private lateinit var mainViewModel: MainViewModel
 
-    private val getWeather = Observer<ArrayList<WeatherItems>> { weatherItems ->
-        if (weatherItems != null) {
-            adapter.setData(weatherItems)
-            showLoading(false)
-        }
-    }
-
-    private var myListener: View.OnClickListener = View.OnClickListener {
-        val city = editCity.text.toString()
-
-        if (city.isEmpty()) return@OnClickListener
-
-        mainViewModel.setWeather(city)
-        showLoading(true)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
-        mainViewModel.weathers.observe(this, getWeather)
 
         adapter = WeatherAdapter()
         adapter.notifyDataSetChanged()
@@ -46,7 +22,23 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-        findViewById<View>(R.id.btnCity).setOnClickListener(myListener)
+        mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
+
+        btnCity.setOnClickListener {
+            val city = editCity.text.toString()
+
+            if (city.isEmpty()) return@setOnClickListener
+
+            mainViewModel.setWeather(city)
+            showLoading(true)
+        }
+
+        mainViewModel.getweathers().observe(this, Observer { weatherItems ->
+            if (weatherItems != null) {
+                adapter.setData(weatherItems)
+                showLoading(false)
+            }
+        })
     }
 
     private fun showLoading(state: Boolean) {

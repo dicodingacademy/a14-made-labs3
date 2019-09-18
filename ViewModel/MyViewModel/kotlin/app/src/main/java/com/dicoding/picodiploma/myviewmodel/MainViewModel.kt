@@ -8,6 +8,7 @@ import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
 import org.json.JSONObject
+import java.text.DecimalFormat
 import java.util.*
 
 /**
@@ -16,14 +17,10 @@ import java.util.*
 
 class MainViewModel : ViewModel() {
 
-    private val listWeathers = MutableLiveData<ArrayList<WeatherItems>>()
-
-    internal val weathers: LiveData<ArrayList<WeatherItems>>
-        get() = listWeathers
-
     companion object {
-        private const val API_KEY = "MASUKKAN_API_KEY_DISINI"
+          private const val API_KEY = "ISI SESUAI API_KEY ANDA"
     }
+    private val listWeathers = MutableLiveData<ArrayList<WeatherItems>>()
 
     internal fun setWeather(cities: String) {
         val client = AsyncHttpClient()
@@ -39,7 +36,14 @@ class MainViewModel : ViewModel() {
 
                     for (i in 0 until list.length()) {
                         val weather = list.getJSONObject(i)
-                        val weatherItems = WeatherItems(weather)
+                        val weatherItems = WeatherItems()
+                        weatherItems.id = weather.getInt("id")
+                        weatherItems.name = weather.getString("name")
+                        weatherItems.currentWeather = weather.getJSONArray("weather").getJSONObject(0).getString("main")
+                        weatherItems.description = weather.getJSONArray("weather").getJSONObject(0).getString("description")
+                        val tempInKelvin = weather.getJSONObject("main").getDouble("temp")
+                        val tempInCelsius = tempInKelvin - 273
+                        weatherItems.temperature = DecimalFormat("##.##").format(tempInCelsius)
                         listItems.add(weatherItems)
                     }
                     listWeathers.postValue(listItems)
@@ -53,5 +57,9 @@ class MainViewModel : ViewModel() {
                 Log.d("onFailure", error.message.toString())
             }
         })
+    }
+
+    internal fun getweathers(): LiveData<ArrayList<WeatherItems>> {
+        return listWeathers
     }
 }

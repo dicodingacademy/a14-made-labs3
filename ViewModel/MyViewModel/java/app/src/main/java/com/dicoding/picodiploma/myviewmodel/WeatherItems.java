@@ -16,30 +16,6 @@ public class WeatherItems {
     private String description;
     private String temperature;
 
-    WeatherItems(JSONObject object) {
-
-        try {
-            int id = object.getInt("id");
-            String name = object.getString("name");
-            String currentWeather = object.getJSONArray("weather").getJSONObject(0).getString("main");
-            String description = object.getJSONArray("weather").getJSONObject(0).getString("description");
-            double tempInKelvin = object.getJSONObject("main").getDouble("temp");
-
-            double tempInCelsius = tempInKelvin - 273;
-            String temperature = new DecimalFormat("##.##").format(tempInCelsius);
-            this.id = id;
-            this.name = name;
-            this.currentWeather = currentWeather;
-            this.description = description;
-            this.temperature = temperature;
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
-        }
-    }
-
     public int getId() {
         return id;
     }

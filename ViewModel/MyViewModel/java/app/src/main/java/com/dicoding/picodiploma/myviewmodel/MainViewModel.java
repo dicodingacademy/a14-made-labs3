@@ -11,6 +11,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
@@ -21,11 +22,12 @@ import cz.msebera.android.httpclient.Header;
 
 public class MainViewModel extends ViewModel {
 
-    private static final String API_KEY = "cb744b309dbc7c577fe57bde64e8cf3a";
+    private static final String API_KEY = "ISI SESUAI API_KEY ANDA";
+//    private static final String API_KEY = "cb744b309dbc7c577fe57bde64e8cf3a";
 
-    private final MutableLiveData<ArrayList<WeatherItems>> listWeathers = new MutableLiveData<>();
+    private MutableLiveData<ArrayList<WeatherItems>> listWeathers = new MutableLiveData<>();
 
-    public void setWeather(final String cities) {
+    void setWeather(final String cities) {
         AsyncHttpClient client = new AsyncHttpClient();
         final ArrayList<WeatherItems> listItems = new ArrayList<>();
         String url = "https://api.openweathermap.org/data/2.5/group?id=" + cities + "&units=metric&appid=" + API_KEY;
@@ -40,7 +42,14 @@ public class MainViewModel extends ViewModel {
 
                     for (int i = 0; i < list.length(); i++) {
                         JSONObject weather = list.getJSONObject(i);
-                        WeatherItems weatherItems = new WeatherItems(weather);
+                        WeatherItems weatherItems = new WeatherItems();
+                        weatherItems.setId(weather.getInt("id"));
+                        weatherItems.setName(weather.getString("name"));
+                        weatherItems.setCurrentWeather(weather.getJSONArray("weather").getJSONObject(0).getString("main"));
+                        weatherItems.setDescription(weather.getJSONArray("weather").getJSONObject(0).getString("description"));
+                        double tempInKelvin = weather.getJSONObject("main").getDouble("temp");
+                        double tempInCelsius = tempInKelvin - 273;
+                        weatherItems.setTemperature(new DecimalFormat("##.##").format(tempInCelsius));
                         listItems.add(weatherItems);
                     }
                     listWeathers.postValue(listItems);
