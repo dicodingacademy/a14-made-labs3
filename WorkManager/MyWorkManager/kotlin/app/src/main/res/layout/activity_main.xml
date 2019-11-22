@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,51 +9,58 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/enter_city_name" />
+        android:text="@string/enter_city_name"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editCity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/btnOneTimeTask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:text="@string/run_one_time_task" />
+        android:text="@string/run_one_time_task"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editCity" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btnPeriodicTask"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_margin="4dp"
+        android:text="@string/run_periodic_task"
+        app:layout_constraintEnd_toStartOf="@+id/btnCancelTask"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnOneTimeTask" />
 
-        <Button
-            android:id="@+id/btnPeriodicTask"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:text="@string/run_periodic_task" />
-
-        <Button
-            android:id="@+id/btnCancelTask"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
-            android:enabled="false"
-            android:text="@string/cancel_periodic_task" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/btnCancelTask"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:enabled="false"
+        android:text="@string/cancel_periodic_task"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnPeriodicTask"
+        app:layout_constraintTop_toBottomOf="@+id/btnOneTimeTask" />
 
     <TextView
         android:id="@+id/textStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/status" />
+        android:text="@string/status"
+        app:layout_constraintStart_toStartOf="@+id/btnPeriodicTask"
+        app:layout_constraintTop_toBottomOf="@+id/btnPeriodicTask" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
