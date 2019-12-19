@@ -4,7 +4,6 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import kotlinx.android.synthetic.main.weather_items.view.*
 
 import java.util.ArrayList
@@ -55,7 +54,7 @@ class WeatherAdapter : RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder>() 
     inner class WeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(weatherItems: WeatherItems) {
             with(itemView){
-                textKota.text = weatherItems.name
+                textCity.text = weatherItems.name
                 textTemp.text = weatherItems.temperature
                 textDesc.text = weatherItems.description
             }

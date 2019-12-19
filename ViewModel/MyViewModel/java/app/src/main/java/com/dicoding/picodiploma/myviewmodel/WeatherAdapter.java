@@ -59,19 +59,19 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherV
     }
 
     class WeatherViewHolder extends RecyclerView.ViewHolder {
-        private final TextView textViewNamaKota;
+        private final TextView textViewCity;
         private final TextView textViewTemperature;
         private final TextView textViewDescription;
 
         WeatherViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewNamaKota = itemView.findViewById(R.id.textKota);
+            textViewCity = itemView.findViewById(R.id.textCity);
             textViewTemperature = itemView.findViewById(R.id.textTemp);
             textViewDescription = itemView.findViewById(R.id.textDesc);
         }
 
         void bind(WeatherItems weatherItems){
-            textViewNamaKota.setText(weatherItems.getName());
+            textViewCity.setText(weatherItems.getName());
             textViewTemperature.setText(weatherItems.getTemperature());
             textViewDescription.setText(weatherItems.getDescription());
         }
