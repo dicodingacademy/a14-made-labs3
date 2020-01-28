@@ -17,19 +17,20 @@ import java.util.*
 
 class MainViewModel : ViewModel() {
 
-    companion object {
-          private const val API_KEY = "ISI SESUAI API_KEY ANDA"
-    }
     private val listWeathers = MutableLiveData<ArrayList<WeatherItems>>()
 
-    internal fun setWeather(cities: String) {
-        val client = AsyncHttpClient()
+    fun setWeather(cities: String) {
         val listItems = ArrayList<WeatherItems>()
-        val url = "https://api.openweathermap.org/data/2.5/group?id=$cities&units=metric&appid=$API_KEY"
 
+        val apiKey = "ISI SESUAI API KEY ANDA"
+        //  val apiKey = "93a3696714297ee5a9f65486aa8cb824"
+        val url = "https://api.openweathermap.org/data/2.5/group?id=$cities&units=metric&appid=${apiKey}"
+
+        val client = AsyncHttpClient()
         client.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Array<Header>, responseBody: ByteArray) {
                 try {
+                    //parsing json
                     val result = String(responseBody)
                     val responseObject = JSONObject(result)
                     val list = responseObject.getJSONArray("list")
@@ -46,6 +47,7 @@ class MainViewModel : ViewModel() {
                         weatherItems.temperature = DecimalFormat("##.##").format(tempInCelsius)
                         listItems.add(weatherItems)
                     }
+
                     listWeathers.postValue(listItems)
                 } catch (e: Exception) {
                     Log.d("Exception", e.message.toString())

@@ -30,11 +30,11 @@ dependencies {
     implementation "androidx.core:core-ktx:1.1.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-alpha04'
-    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.2.0-alpha04'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-rc03'
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.2.0-rc03'
 
     implementation 'com.loopj.android:android-async-http:1.4.9'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }
 repositories {
     mavenCentral()

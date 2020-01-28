@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity() {
 
             if (city.isEmpty()) return@setOnClickListener
 
-            mainViewModel.setWeather(city)
             showLoading(true)
+            mainViewModel.setWeather(city)
         }
 
         mainViewModel.getweathers().observe(this, Observer { weatherItems ->
@@ -48,5 +48,4 @@ class MainActivity : AppCompatActivity() {
             progressBar.visibility = View.GONE
         }
     }
-
 }
