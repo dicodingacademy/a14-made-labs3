@@ -22,20 +22,21 @@ import cz.msebera.android.httpclient.Header;
 
 public class MainViewModel extends ViewModel {
 
-    private static final String API_KEY = "ISI SESUAI API_KEY ANDA";
-//    private static final String API_KEY = "cb744b309dbc7c577fe57bde64e8cf3a";
-
     private MutableLiveData<ArrayList<WeatherItems>> listWeathers = new MutableLiveData<>();
 
     void setWeather(final String cities) {
-        AsyncHttpClient client = new AsyncHttpClient();
         final ArrayList<WeatherItems> listItems = new ArrayList<>();
-        String url = "https://api.openweathermap.org/data/2.5/group?id=" + cities + "&units=metric&appid=" + API_KEY;
 
+        String apiKey = "ISI SESUAI API KEY ANDA";
+        //        String apiKey = "93a3696714297ee5a9f65486aa8cb824";
+        String url = "https://api.openweathermap.org/data/2.5/group?id=" + cities + "&units=metric&appid=" + apiKey;
+
+        AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 try {
+                    //parsing json
                     String result = new String(responseBody);
                     JSONObject responseObject = new JSONObject(result);
                     JSONArray list = responseObject.getJSONArray("list");

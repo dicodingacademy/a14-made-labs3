@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
                 if (TextUtils.isEmpty(city)) return;
 
-                mainViewModel.setWeather(city);
                 showLoading(true);
+                mainViewModel.setWeather(city);
             }
         });
 
@@ -70,5 +70,4 @@ public class MainActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
         }
     }
-
 }
