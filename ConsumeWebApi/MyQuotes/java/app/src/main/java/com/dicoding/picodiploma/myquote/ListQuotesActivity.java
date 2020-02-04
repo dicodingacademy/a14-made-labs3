@@ -49,7 +49,7 @@ public class ListQuotesActivity extends AppCompatActivity {
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                //jika koneksi berhasil
+                // Jika koneksi berhasil
                 progressBar.setVisibility(View.INVISIBLE);
 
                 ArrayList<String> listQuote = new ArrayList<>();
@@ -76,7 +76,7 @@ public class ListQuotesActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                //jika koneksi gagal
+                // Jika koneksi gagal
                 progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(ListQuotesActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }

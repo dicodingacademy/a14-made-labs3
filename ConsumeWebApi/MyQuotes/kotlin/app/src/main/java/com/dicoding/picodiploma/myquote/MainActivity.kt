@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         val url = "https://programming-quotes-api.herokuapp.com/quotes/random"
         client.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Array<Header>, responseBody: ByteArray) {
-                //jika koneksi berhasil
+                // Jika koneksi berhasil
                 progressBar.visibility = View.INVISIBLE
 
                 val result = String(responseBody)
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFailure(statusCode: Int, headers: Array<Header>, responseBody: ByteArray, error: Throwable) {
-                //jika koneksi gagal
+                // Jika koneksi gagal
                 progressBar.visibility = View.INVISIBLE
                 Toast.makeText(this@MainActivity, error.message, Toast.LENGTH_SHORT).show()
             }

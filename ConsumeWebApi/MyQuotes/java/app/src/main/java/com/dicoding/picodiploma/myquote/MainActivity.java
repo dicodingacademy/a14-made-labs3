@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity{
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                //jika koneksi berhasil
+                // Jika koneksi berhasil
                 progressBar.setVisibility(View.INVISIBLE);
 
                 String result = new String(responseBody);
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity{
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                //jika koneksi gagal
+                // Jika koneksi gagal
                 progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
