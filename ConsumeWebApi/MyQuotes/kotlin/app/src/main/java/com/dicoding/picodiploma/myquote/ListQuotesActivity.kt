@@ -20,6 +20,10 @@ import kotlinx.android.synthetic.main.activity_list_quotes.*
 
 class ListQuotesActivity : AppCompatActivity() {
 
+    companion object {
+        private val TAG = ListQuotesActivity::class.java.simpleName
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_quotes)
@@ -67,10 +71,5 @@ class ListQuotesActivity : AppCompatActivity() {
                 Toast.makeText(this@ListQuotesActivity, error.message, Toast.LENGTH_SHORT).show()
             }
         })
-    }
-
-    companion object {
-
-        private val TAG = ListQuotesActivity::class.java.getSimpleName()
     }
 }
