@@ -77,7 +77,23 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 // Jika koneksi gagal
                 progressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(MainActivity.this, "Error " + statusCode + " : " + error.getMessage(), Toast.LENGTH_SHORT).show();
+
+                String errorMessage;
+                switch (statusCode) {
+                    case 401:
+                        errorMessage = statusCode + " : Bad Request";
+                        break;
+                    case 403:
+                        errorMessage = statusCode + " : Forbidden";
+                        break;
+                    case 404:
+                        errorMessage = statusCode + " : Not Found";
+                        break;
+                    default:
+                        errorMessage =  statusCode + " : " + error.getMessage();
+                        break;
+                }
+                Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
     }

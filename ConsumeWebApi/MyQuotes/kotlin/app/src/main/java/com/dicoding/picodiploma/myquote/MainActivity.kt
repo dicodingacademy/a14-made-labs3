@@ -63,7 +63,14 @@ class MainActivity : AppCompatActivity() {
             override fun onFailure(statusCode: Int, headers: Array<Header>, responseBody: ByteArray, error: Throwable) {
                 // Jika koneksi gagal
                 progressBar.visibility = View.INVISIBLE
-                Toast.makeText(this@MainActivity, "Error $statusCode : ${error.message}", Toast.LENGTH_SHORT).show()
+
+                val errorMessage = when (statusCode) {
+                    401 -> "$statusCode : Bad Request"
+                    403 -> "$statusCode : Forbidden"
+                    404 -> "$statusCode : Not Found"
+                    else -> "$statusCode : ${error.message}"
+                }
+                Toast.makeText(this@MainActivity, errorMessage, Toast.LENGTH_SHORT).show()
             }
         })
     }
