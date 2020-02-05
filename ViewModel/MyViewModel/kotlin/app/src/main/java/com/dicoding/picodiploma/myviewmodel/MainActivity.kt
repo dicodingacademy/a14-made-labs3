@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             mainViewModel.setWeather(city)
         }
 
-        mainViewModel.getweathers().observe(this, Observer { weatherItems ->
+        mainViewModel.getWeathers().observe(this, Observer { weatherItems ->
             if (weatherItems != null) {
                 adapter.setData(weatherItems)
                 showLoading(false)

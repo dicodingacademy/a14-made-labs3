@@ -61,7 +61,7 @@ class MainViewModel : ViewModel() {
         })
     }
 
-    internal fun getweathers(): LiveData<ArrayList<WeatherItems>> {
+    fun getWeathers(): LiveData<ArrayList<WeatherItems>> {
         return listWeathers
     }
 }
