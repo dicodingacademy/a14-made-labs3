@@ -78,7 +78,7 @@ public class ListQuotesActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 // Jika koneksi gagal
                 progressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(ListQuotesActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListQuotesActivity.this, "Error " + statusCode + " : " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

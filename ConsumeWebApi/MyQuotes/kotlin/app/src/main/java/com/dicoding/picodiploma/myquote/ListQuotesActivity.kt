@@ -68,7 +68,7 @@ class ListQuotesActivity : AppCompatActivity() {
             override fun onFailure(statusCode: Int, headers: Array<Header>, responseBody: ByteArray, error: Throwable) {
                 // Jika koneksi gagal
                 progressBar.visibility = View.INVISIBLE
-                Toast.makeText(this@ListQuotesActivity, error.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ListQuotesActivity, "Error $statusCode : ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }

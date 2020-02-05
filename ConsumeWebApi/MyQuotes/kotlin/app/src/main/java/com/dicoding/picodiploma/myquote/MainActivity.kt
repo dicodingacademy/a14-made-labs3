@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
             override fun onFailure(statusCode: Int, headers: Array<Header>, responseBody: ByteArray, error: Throwable) {
                 // Jika koneksi gagal
                 progressBar.visibility = View.INVISIBLE
-                Toast.makeText(this@MainActivity, error.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Error $statusCode : ${error.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }

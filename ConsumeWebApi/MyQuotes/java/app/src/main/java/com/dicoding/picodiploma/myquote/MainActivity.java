@@ -2,6 +2,7 @@ package com.dicoding.picodiploma.myquote;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
@@ -18,7 +19,7 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity{
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 // Jika koneksi gagal
                 progressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Error " + statusCode + " : " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
