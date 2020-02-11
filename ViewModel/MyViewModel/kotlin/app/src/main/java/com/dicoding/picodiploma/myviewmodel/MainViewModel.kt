@@ -55,13 +55,13 @@ class MainViewModel : ViewModel() {
 
             }
 
-            override fun onFailure(statusCode: Int, headers: Array<Header>, responseBody: ByteArray, error: Throwable) {
-                Log.d("onFailure", error.message.toString())
+            override fun onFailure(statusCode: Int, headers: Array<Header>?, responseBody: ByteArray?, error: Throwable?) {
+                Log.d("onFailure", error?.message.toString())
             }
         })
     }
 
-    internal fun getweathers(): LiveData<ArrayList<WeatherItems>> {
+    fun getWeathers(): LiveData<ArrayList<WeatherItems>> {
         return listWeathers
     }
 }
