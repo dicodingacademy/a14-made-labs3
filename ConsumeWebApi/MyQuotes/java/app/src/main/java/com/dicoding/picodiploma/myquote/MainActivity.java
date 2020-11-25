@@ -38,18 +38,15 @@ public class MainActivity extends AppCompatActivity {
         getRandomQuote();
 
         Button btnAllQuote = findViewById(R.id.btnAllQuotes);
-        btnAllQuote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, ListQuotesActivity.class));
-            }
-        });
+        btnAllQuote.setOnClickListener(view ->
+                startActivity(new Intent(MainActivity.this, ListQuotesActivity.class))
+        );
     }
 
     private void getRandomQuote() {
         progressBar.setVisibility(View.VISIBLE);
         AsyncHttpClient client = new AsyncHttpClient();
-        String url = "https://programming-quotes-api.herokuapp.com/quotes/random";
+        String url = "https://quote-api.dicoding.dev/random";
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

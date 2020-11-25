@@ -45,7 +45,7 @@ public class ListQuotesActivity extends AppCompatActivity {
     private void getListQuotes() {
         progressBar.setVisibility(View.VISIBLE);
         AsyncHttpClient client = new AsyncHttpClient();
-        String url = "https://programming-quotes-api.herokuapp.com/quotes/page/1";
+        String url = "https://quote-api.dicoding.dev/list";
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {

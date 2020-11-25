@@ -1,137 +1,65 @@
 package com.dicoding.picodiploma.mybackgroundthread;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import android.util.Log;
+import android.os.Handler;
+import android.os.Looper;
+import android.widget.Button;
 import android.widget.TextView;
 
-import java.lang.ref.WeakReference;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements MyAsyncCallback {
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-    private TextView tvStatus;
-    private TextView tvDesc;
-
-    private final static String INPUT_STRING = "Halo Ini Demo AsyncTask!!";
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvStatus = findViewById(R.id.tv_status);
-        tvDesc = findViewById(R.id.tv_desc);
+        Button btnStart = findViewById(R.id.btn_start);
+        TextView tvStatus = findViewById(R.id.tv_status);
 
-        DemoAsync demoAsync = new DemoAsync(this);
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
 
-        // Execute asynctask dengan parameter string 'Halo Ini Demo AsyncTask'
-        demoAsync.execute(INPUT_STRING);
-    }
-
-
-    @Override
-    public void onPreExecute() {
-        tvStatus.setText(R.string.status_pre);
-        tvDesc.setText(INPUT_STRING);
-    }
-
-    @Override
-    public void onPostExecute(String result) {
-        tvStatus.setText(R.string.status_post);
-        if (result != null) {
-            tvDesc.setText(result);
-        }
-    }
-
-
-    /**
-     * 3 parameter generic <String, Void, String>
-     * 1. Params, parameter input yang bisa dikirimkan
-     * 2. Progress, digunakan untuk publish informasi sudah sampai mana proses background berjalan
-     * 3. Result, object yang dikirimkan ke onPostExecute / hasil dari proses doInBackground
-     */
-    private static class DemoAsync extends AsyncTask<String, Void, String> {
-
-        private static final String LOG_ASYNC = "DemoAsync";
-
-        // Penggunaan weakreference disarankan untuk menghindari memory leaks
-        private final WeakReference<MyAsyncCallback> myListener;
-
-        private DemoAsync(MyAsyncCallback myListener) {
-            this.myListener = new WeakReference<>(myListener);
-        }
-
-        /*
-        onPreExecute digunakan untuk persiapan asynctask
-        berjalan di Main Thread, bisa akses ke view karena masih di dalam Main Thread
-         */
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Log.d(LOG_ASYNC, "status : onPreExecute");
-
-            MyAsyncCallback myListener = this.myListener.get();
-            if (myListener != null) {
-                myListener.onPreExecute();
-            }
-
-
-        }
-
-        /*
-        doInBackground digunakan untuk menjalankan proses secara async
-        berjalan di background thread, tidak bisa akses ke view karena sudah beda thread
-         */
-        @Override
-        protected String doInBackground(String... params) {
-            Log.d(LOG_ASYNC, "status : doInBackground");
-
-            String output = null;
-
-            try {
-
-                /*
-                params[0] adalah 'Halo Ini Demo AsyncTask'
-                */
-
-                String input = params[0];
-
-                // Input stringnya ditambahkan dengan string ' Selamat Belajar!!"
-                output = input + " Selamat Belajar!!";
-
-
-                /*
-                Sleep thread digunakan untuk simulasi bahwa ada proses yang sedang berjalan selama 2 detik
-                2000 miliseconds = 2 detik
-                */
-                Thread.sleep(2000);
-
-            } catch (Exception e) {
-                Log.d(LOG_ASYNC, e.getMessage());
-            }
-
-            return output;
-        }
-
-        /*
-        onPostExecute dijalankan ketika proses doInBackground telah selesai
-        berjalan di Main Thread
-         */
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            Log.d(LOG_ASYNC, "status : onPostExecute");
-
-            MyAsyncCallback myListener = this.myListener.get();
-            if (myListener != null) {
-                myListener.onPostExecute(result);
-            }
-        }
+        btnStart.setOnClickListener(v -> {
+//            try {
+//                //simulate process compressing
+//                for (int i = 0; i <= 10; i++) {
+//                    Thread.sleep(500);
+//                    int percentage = i * 10;
+//                    if (percentage == 100) {
+//                        tvStatus.setText(R.string.task_completed);
+//                    } else {
+//                        tvStatus.setText(String.format(getString(R.string.compressing), percentage));
+//                    }
+//                }
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+            executor.execute(() -> {
+                try {
+                    //simulate process in background thread
+                    for (int i = 0; i <= 10; i++) {
+                        Thread.sleep(500);
+                        int percentage = i * 10;
+                        handler.post(() -> {
+                            //update ui in main thread
+                            if (percentage == 100) {
+                                tvStatus.setText(R.string.task_completed);
+                            } else {
+                                tvStatus.setText(String.format(getString(R.string.compressing), percentage));
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        });
     }
 }
-interface MyAsyncCallback {
-    void onPreExecute();
-    void onPostExecute(String text);
-}
+
+

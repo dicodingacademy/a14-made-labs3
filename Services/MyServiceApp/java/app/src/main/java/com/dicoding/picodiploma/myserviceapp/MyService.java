@@ -7,9 +7,10 @@ import android.os.IBinder;
 import android.util.Log;
 
 import java.lang.ref.WeakReference;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-//langkah 2 : implement interface dan implement method preAsync dan postAsync
-public class MyService extends Service implements DummyAsyncCallback {
+public class MyService extends Service {
 
     private static final String TAG = MyService.class.getSimpleName();
 
@@ -21,11 +22,17 @@ public class MyService extends Service implements DummyAsyncCallback {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "Service dijalankan...");
-
-        //langkah 4 : inisialisasi dan jalankan AsyncTask
-        DummyAsync dummyAsync = new DummyAsync(this);
-        dummyAsync.execute();
-
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            Log.d(TAG, "preAsync: Mulai.....");
+            try {
+                Thread.sleep(2000);
+                Log.d(TAG, "postAsync: Selesai.....");
+                stopSelf();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
         return START_STICKY;
     }
 
@@ -35,56 +42,4 @@ public class MyService extends Service implements DummyAsyncCallback {
         Log.d(TAG, "onDestroy: ");
     }
 
-    //langkah 5 : tambahkan aksi di callback
-    @Override
-    public void preAsync() {
-        Log.d(TAG, "preAsync: Mulai.....");
-    }
-
-    @Override
-    public void postAsync() {
-        Log.d(TAG, "postAsync: Selesai.....");
-        stopSelf();
-    }
-
-    //langkah 3 : buat AsyncTask dan WeakReference
-    private static class DummyAsync extends AsyncTask<Void, Void, Void> {
-
-        private final WeakReference<DummyAsyncCallback> callback;
-
-        DummyAsync(DummyAsyncCallback callback) {
-            this.callback = new WeakReference<>(callback);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Log.d(TAG, "onPreExecute: ");
-            callback.get().preAsync();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            Log.d(TAG, "doInBackground: ");
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            Log.d(TAG, "onPostExecute: ");
-            callback.get().postAsync();
-        }
-    }
-}
-
-//langkah 1 : buat interface
-interface DummyAsyncCallback {
-    void preAsync();
-    void postAsync();
 }
