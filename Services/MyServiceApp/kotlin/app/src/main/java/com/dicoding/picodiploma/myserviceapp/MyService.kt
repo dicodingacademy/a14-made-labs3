@@ -4,9 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class MyService : Service() {
 
@@ -14,13 +12,16 @@ class MyService : Service() {
         internal val TAG = MyService::class.java.simpleName
     }
 
+    private val serviceJob = Job()
+    private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
+
     override fun onBind(intent: Intent): IBinder? {
         throw UnsupportedOperationException("Not yet implemented")
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         Log.d(TAG, "Service dijalankan...")
-        GlobalScope.launch {
+        serviceScope.launch {
             delay(3000)
             stopSelf()
             Log.d(TAG, "Service dihentikan")
@@ -30,6 +31,8 @@ class MyService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+        serviceJob.cancel()
         Log.d(TAG, "onDestroy: ")
     }
+
 }
