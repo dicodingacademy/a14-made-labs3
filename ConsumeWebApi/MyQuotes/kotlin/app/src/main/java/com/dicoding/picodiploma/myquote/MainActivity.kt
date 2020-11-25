@@ -2,11 +2,12 @@ package com.dicoding.picodiploma.myquote
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.dicoding.picodiploma.myquote.databinding.ActivityMainBinding
 
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
@@ -14,7 +15,6 @@ import com.loopj.android.http.AsyncHttpResponseHandler
 import org.json.JSONObject
 
 import cz.msebera.android.httpclient.Header
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,25 +22,28 @@ class MainActivity : AppCompatActivity() {
         private val TAG = MainActivity::class.java.simpleName
     }
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         getRandomQuote()
 
-        btnAllQuotes.setOnClickListener {
+        binding.btnAllQuotes.setOnClickListener {
             startActivity(Intent(this@MainActivity, ListQuotesActivity::class.java))
         }
     }
 
     private fun getRandomQuote() {
-        progressBar.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
         val client = AsyncHttpClient()
-        val url = "https://programming-quotes-api.herokuapp.com/quotes/random"
+        val url = "https://quote-api.dicoding.dev/random"
         client.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Array<Header>, responseBody: ByteArray) {
                 // Jika koneksi berhasil
-                progressBar.visibility = View.INVISIBLE
+                binding.progressBar.visibility = View.INVISIBLE
 
                 val result = String(responseBody)
                 Log.d(TAG, result)
@@ -50,8 +53,8 @@ class MainActivity : AppCompatActivity() {
                     val quote = responseObject.getString("en")
                     val author = responseObject.getString("author")
 
-                    tvQuote.text = quote
-                    tvAuthor.text = author
+                    binding.tvQuote.text = quote
+                    binding.tvAuthor.text = author
 
                 } catch (e: Exception) {
                     Toast.makeText(this@MainActivity, e.message, Toast.LENGTH_SHORT).show()
@@ -62,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onFailure(statusCode: Int, headers: Array<Header>, responseBody: ByteArray, error: Throwable) {
                 // Jika koneksi gagal
-                progressBar.visibility = View.INVISIBLE
+                binding.progressBar.visibility = View.INVISIBLE
 
                 val errorMessage = when (statusCode) {
                     401 -> "$statusCode : Bad Request"
