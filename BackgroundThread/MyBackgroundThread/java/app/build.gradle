@@ -5,7 +5,7 @@ plugins {
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId "com.dicoding.picodiploma.myasynctask"
+        applicationId "com.dicoding.picodiploma.mybackgroundthread"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1

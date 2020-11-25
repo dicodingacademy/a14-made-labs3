@@ -1,51 +1,65 @@
 package com.dicoding.picodiploma.mybackgroundthread;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 
-import java.lang.ref.WeakReference;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executor;
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
-
-    private TextView tvStatus;
-    private TextView tvDesc;
-
-    private final static String INPUT_STRING = "Halo Ini Demo AsyncTask!!";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvStatus = findViewById(R.id.tv_status);
-        tvDesc = findViewById(R.id.tv_desc);
+        Button btnStart = findViewById(R.id.btn_start);
+        TextView tvStatus = findViewById(R.id.tv_status);
 
-        new Thread(() -> {
-            tvStatus.setText(R.string.status_pre);
-            tvDesc.setText(INPUT_STRING);
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
 
-            String output = INPUT_STRING + " Selamat Belajar!!";
-            Log.d("LOG_ASYNC", "status : doInBackground");
-
-            try {
-                Thread.sleep(2000);
-                runOnUiThread(() -> {
-                    tvStatus.setText(R.string.status_post);
-                    tvDesc.setText(output);
-                });
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
+        btnStart.setOnClickListener(v -> {
+//            try {
+//                //simulate process compressing
+//                for (int i = 0; i <= 10; i++) {
+//                    Thread.sleep(500);
+//                    int percentage = i * 10;
+//                    if (percentage == 100) {
+//                        tvStatus.setText(R.string.task_completed);
+//                    } else {
+//                        tvStatus.setText(String.format(getString(R.string.compressing), percentage));
+//                    }
+//                }
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+            executor.execute(() -> {
+                try {
+                    //simulate process in background thread
+                    for (int i = 0; i <= 10; i++) {
+                        Thread.sleep(500);
+                        int percentage = i * 10;
+                        handler.post(() -> {
+                            //update ui in main thread
+                            if (percentage == 100) {
+                                tvStatus.setText(R.string.task_completed);
+                            } else {
+                                tvStatus.setText(String.format(getString(R.string.compressing), percentage));
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        });
     }
 }
+
+
