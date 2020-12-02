@@ -23,8 +23,8 @@ class MainViewModel : ViewModel() {
         val listItems = ArrayList<WeatherItems>()
 
         val apiKey = "ISI SESUAI API KEY ANDA"
-        //  val apiKey = "93a3696714297ee5a9f65486aa8cb824"
-        val url = "https://api.openweathermap.org/data/2.5/group?id=$cities&units=metric&appid=${apiKey}"
+//        val apiKey = "93a3696714297ee5a9f65486aa8cb824"
+        val url = "https://api.openweathermap.org/data/2.5/group?id=${cities}&units=metric&appid=${apiKey}"
 
         val client = AsyncHttpClient()
         client.get(url, object : AsyncHttpResponseHandler() {

@@ -1,9 +1,5 @@
 package com.dicoding.picodiploma.myviewmodel;
 
-import org.json.JSONObject;
-
-import java.text.DecimalFormat;
-
 /**
  * Created by Emeth on 10/31/2016.
  */

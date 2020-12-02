@@ -1,12 +1,11 @@
 package com.dicoding.picodiploma.myviewmodel
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.weather_items.view.*
-
-import java.util.ArrayList
+import androidx.recyclerview.widget.RecyclerView
+import com.dicoding.picodiploma.myviewmodel.databinding.WeatherItemsBinding
+import java.util.*
 
 /**
  * Created by Emeth on 10/31/2016.
@@ -52,12 +51,11 @@ class WeatherAdapter : RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder>() 
     override fun getItemCount(): Int = mData.size
 
     inner class WeatherViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val binding = WeatherItemsBinding.bind(itemView)
         fun bind(weatherItems: WeatherItems) {
-            with(itemView){
-                textCity.text = weatherItems.name
-                textTemp.text = weatherItems.temperature
-                textDesc.text = weatherItems.description
-            }
+            binding.textCity.text = weatherItems.name
+            binding.textTemp.text = weatherItems.temperature
+            binding.textDesc.text = weatherItems.description
         }
     }
 }

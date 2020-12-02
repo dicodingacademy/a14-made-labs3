@@ -58,7 +58,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherV
         return mData.size();
     }
 
-    class WeatherViewHolder extends RecyclerView.ViewHolder {
+    static class WeatherViewHolder extends RecyclerView.ViewHolder {
         private final TextView textViewCity;
         private final TextView textViewTemperature;
         private final TextView textViewDescription;
