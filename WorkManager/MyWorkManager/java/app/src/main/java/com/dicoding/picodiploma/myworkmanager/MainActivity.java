@@ -1,7 +1,12 @@
 package com.dicoding.picodiploma.myworkmanager;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.NetworkType;
@@ -9,12 +14,6 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
-
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -43,17 +42,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-       switch (view.getId()){
-           case R.id.btnOneTimeTask:
-               startOneTimeTask();
-               break;
-           case R.id.btnPeriodicTask:
-               startPeriodicTask();
-               break;
-           case R.id.btnCancelTask:
-               cancelPeriodicTask();
-               break;
-       }
+        int id = view.getId();
+        if (id == R.id.btnOneTimeTask) {
+            startOneTimeTask();
+        } else if (id == R.id.btnPeriodicTask) {
+            startPeriodicTask();
+        } else if (id == R.id.btnCancelTask) {
+            cancelPeriodicTask();
+        }
     }
 
     private void startOneTimeTask() {
@@ -74,13 +70,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         WorkManager.getInstance().enqueue(oneTimeWorkRequest);
 
-        WorkManager.getInstance().getWorkInfoByIdLiveData(oneTimeWorkRequest.getId()).observe(MainActivity.this, new Observer<WorkInfo>() {
-            @Override
-            public void onChanged(WorkInfo workInfo) {
-                String status = workInfo.getState().name();
-                textStatus.append("\n"+status);
-            }
-        });
+        WorkManager.getInstance()
+                .getWorkInfoByIdLiveData(oneTimeWorkRequest.getId())
+                .observe(MainActivity.this, workInfo -> {
+                    String status = workInfo.getState().name();
+                    textStatus.append("\n"+status);
+                });
     }
 
     private void startPeriodicTask() {
@@ -101,17 +96,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         WorkManager.getInstance().enqueue(periodicWorkRequest);
 
-        WorkManager.getInstance().getWorkInfoByIdLiveData(periodicWorkRequest.getId()).observe(MainActivity.this, new Observer<WorkInfo>() {
-            @Override
-            public void onChanged(WorkInfo workInfo) {
-                String status = workInfo.getState().name();
-                textStatus.append("\n"+status);
-                btnCancelTask.setEnabled(false);
-                if (workInfo.getState() == WorkInfo.State.ENQUEUED){
-                    btnCancelTask.setEnabled(true);
-                }
-            }
-        });
+        WorkManager.getInstance()
+                .getWorkInfoByIdLiveData(periodicWorkRequest.getId())
+                .observe(MainActivity.this, workInfo -> {
+                    String status = workInfo.getState().name();
+                    textStatus.append("\n"+status);
+                    btnCancelTask.setEnabled(false);
+                    if (workInfo.getState() == WorkInfo.State.ENQUEUED){
+                        btnCancelTask.setEnabled(true);
+                    }
+                });
     }
 
     private void cancelPeriodicTask() {
