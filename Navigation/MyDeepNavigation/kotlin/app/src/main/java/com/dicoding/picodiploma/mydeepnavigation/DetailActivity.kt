@@ -5,7 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.picodiploma.mydeepnavigation.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
-    private  lateinit var binding: ActivityDetailBinding
+
+    private lateinit var binding: ActivityDetailBinding
 
     companion object {
         const val EXTRA_TITLE = "extra_title"
