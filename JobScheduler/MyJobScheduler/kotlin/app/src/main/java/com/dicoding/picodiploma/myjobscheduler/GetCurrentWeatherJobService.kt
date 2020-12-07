@@ -56,7 +56,7 @@ class GetCurrentWeatherJobService : JobService() {
     private fun getCurrentWeather(job: JobParameters) {
         Log.d(TAG, "getCurrentWeather: Mulai.....")
         val client = AsyncHttpClient()
-        val url = "http://api.openweathermap.org/data/2.5/weather?q=$CITY&appid=$APP_ID"
+        val url = "https://api.openweathermap.org/data/2.5/weather?q=$CITY&appid=$APP_ID"
         Log.d(TAG, "getCurrentWeather: $url")
         client.get(url, object : AsyncHttpResponseHandler() {
             override fun onSuccess(statusCode: Int, headers: Array<Header>, responseBody: ByteArray) {
