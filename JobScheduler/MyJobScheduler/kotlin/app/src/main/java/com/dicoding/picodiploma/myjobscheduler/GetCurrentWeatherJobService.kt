@@ -35,7 +35,6 @@ class GetCurrentWeatherJobService : JobService() {
     override fun onStartJob(params: JobParameters): Boolean {
         Log.d(TAG, "onStartJob()")
         getCurrentWeather(params)
-
         return true
     }
 

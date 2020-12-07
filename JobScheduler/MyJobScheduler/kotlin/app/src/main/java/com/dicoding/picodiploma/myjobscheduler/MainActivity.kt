@@ -23,12 +23,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnStart.setOnClickListener {
-            startJob()
-        }
-        binding.btnCancel.setOnClickListener {
-            cancelJob()
-        }
+        binding.btnStart.setOnClickListener { startJob() }
+        binding.btnCancel.setOnClickListener { cancelJob() }
     }
 
     private fun startJob() {
