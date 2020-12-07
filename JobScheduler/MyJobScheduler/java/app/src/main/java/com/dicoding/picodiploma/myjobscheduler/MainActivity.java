@@ -6,12 +6,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
     private Button btnStart, btnCancel;
     private static final int JOB_ID = 10;
 
@@ -23,21 +23,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnStart = findViewById(R.id.btn_start);
         btnCancel = findViewById(R.id.btn_cancel);
 
-        btnStart.setOnClickListener(this);
-        btnCancel.setOnClickListener(this);
-    }
+        btnStart.setOnClickListener(view -> startJob());
+        btnCancel.setOnClickListener(view -> cancelJob());
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_start:
-                startJob();
-                break;
-
-            case R.id.btn_cancel:
-                cancelJob();
-                break;
-        }
     }
 
     private void startJob() {
