@@ -16,11 +16,9 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     private DialogDateListener mListener;
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if (context != null) {
-            mListener = (DialogDateListener) context;
-        }
+        mListener = (DialogDateListener) context;
     }
 
     @Override

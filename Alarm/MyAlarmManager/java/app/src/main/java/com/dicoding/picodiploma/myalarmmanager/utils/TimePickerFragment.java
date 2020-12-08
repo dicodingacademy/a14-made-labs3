@@ -16,11 +16,9 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     private DialogTimeListener mListener;
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if (context != null) {
-            mListener = (DialogTimeListener) context;
-        }
+        mListener = (DialogTimeListener) context;
     }
 
     @Override
