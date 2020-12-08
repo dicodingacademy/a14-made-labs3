@@ -2,19 +2,16 @@ package com.dicoding.picodiploma.myalarmmanager
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.dicoding.picodiploma.myalarmmanager.databinding.ActivityMainBinding
 import com.dicoding.picodiploma.myalarmmanager.utils.DatePickerFragment
 import com.dicoding.picodiploma.myalarmmanager.utils.TimePickerFragment
-import kotlinx.android.synthetic.main.activity_main.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragment.DialogDateListener, TimePickerFragment.DialogTimeListener {
 
+    private var binding: ActivityMainBinding? = null
     private lateinit var alarmReceiver: AlarmReceiver
 
     companion object {
@@ -25,17 +22,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
 
         // Listener one time alarm
-        btn_once_date.setOnClickListener(this)
-        btn_once_time.setOnClickListener(this)
-        btn_set_once_alarm.setOnClickListener(this)
+        binding?.btnOnceDate?.setOnClickListener(this)
+        binding?.btnOnceTime?.setOnClickListener(this)
+        binding?.btnSetOnceAlarm?.setOnClickListener(this)
 
         // Listener repeating alarm
-        btn_repeating_time.setOnClickListener(this)
-        btn_set_repeating_alarm.setOnClickListener(this)
-        btn_cancel_repeating_alarm.setOnClickListener(this)
+        binding?.btnRepeatingTime?.setOnClickListener(this)
+        binding?.btnSetRepeatingAlarm?.setOnClickListener(this)
+        binding?.btnCancelRepeatingAlarm?.setOnClickListener(this)
 
         alarmReceiver = AlarmReceiver()
     }
@@ -51,9 +50,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
                 timePickerFragmentOne.show(supportFragmentManager, TIME_PICKER_ONCE_TAG)
             }
             R.id.btn_set_once_alarm -> {
-                val onceDate = tv_once_date.text.toString()
-                val onceTime = tv_once_time.text.toString()
-                val onceMessage = edt_once_message.text.toString()
+                val onceDate = binding?.tvOnceDate?.text.toString()
+                val onceTime = binding?.tvOnceTime?.text.toString()
+                val onceMessage = binding?.edtOnceMessage?.text.toString()
 
                 alarmReceiver.setOneTimeAlarm(this, AlarmReceiver.TYPE_ONE_TIME,
                         onceDate,
@@ -65,8 +64,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
                 timePickerFragmentRepeat.show(supportFragmentManager, TIME_PICKER_REPEAT_TAG)
             }
             R.id.btn_set_repeating_alarm -> {
-                val repeatTime = tv_repeating_time.text.toString()
-                val repeatMessage = edt_repeating_message.text.toString()
+                val repeatTime = binding?.tvRepeatingTime?.text.toString()
+                val repeatMessage = binding?.edtRepeatingMessage?.text.toString()
                 alarmReceiver.setRepeatingAlarm(this, AlarmReceiver.TYPE_REPEATING,
                         repeatTime, repeatMessage)
             }
@@ -82,7 +81,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
         // Set text dari textview once
-        tv_once_date.text = dateFormat.format(calendar.time)
+        binding?.tvOnceDate?.text = dateFormat.format(calendar.time)
     }
 
     override fun onDialogTimeSet(tag: String?, hourOfDay: Int, minute: Int) {
@@ -96,10 +95,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
 
         // Set text dari textview berdasarkan tag
         when (tag) {
-            TIME_PICKER_ONCE_TAG -> tv_once_time.text = dateFormat.format(calendar.time)
-            TIME_PICKER_REPEAT_TAG -> tv_repeating_time.text = dateFormat.format(calendar.time)
+            TIME_PICKER_ONCE_TAG -> binding?.tvOnceTime?.text = dateFormat.format(calendar.time)
+            TIME_PICKER_REPEAT_TAG -> binding?.tvRepeatingTime?.text = dateFormat.format(calendar.time)
             else -> {
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        binding = null
     }
 }
