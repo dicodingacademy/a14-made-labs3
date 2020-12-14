@@ -32,8 +32,7 @@ class MyWorker(context: Context, workerParams: WorkerParameters) : Worker(contex
 
     override fun doWork(): Result {
         val dataCity = inputData.getString(EXTRA_CITY)
-        val result = getCurrentWeather(dataCity)
-        return result
+        return getCurrentWeather(dataCity)
     }
 
     private fun getCurrentWeather(city: String?): Result {

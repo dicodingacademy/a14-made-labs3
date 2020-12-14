@@ -11,7 +11,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.SyncHttpClient;
 
@@ -38,8 +37,7 @@ public class MyWorker extends Worker {
     @Override
     public Result doWork() {
         String dataCity = getInputData().getString(EXTRA_CITY);
-        Result status = getCurrentWeather(dataCity);
-        return status;
+        return getCurrentWeather(dataCity);
     }
 
     private Result getCurrentWeather(final String city) {
