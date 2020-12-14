@@ -83,3 +83,5 @@ ConsumeWebApi/MyQuotes/kotlin/.idea/
 Services/MyServiceApp/java/.idea/
 
 BackgroundThread/MyBackgroundThread/kotlin/.idea/
+
+Broadcast/MyBroadcastReceiver/java/.idea/
