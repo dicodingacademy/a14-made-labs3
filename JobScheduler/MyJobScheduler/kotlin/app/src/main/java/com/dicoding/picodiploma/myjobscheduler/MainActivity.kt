@@ -6,13 +6,13 @@ import android.content.ComponentName
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import com.dicoding.picodiploma.myjobscheduler.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
 
     companion object {
         private const val JOB_ID = 10
@@ -20,18 +20,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        btn_start.setOnClickListener(this)
-        btn_cancel.setOnClickListener(this)
-    }
-
-    override fun onClick(v: View) {
-        when (v.id) {
-            R.id.btn_start -> startJob()
-
-            R.id.btn_cancel -> cancelJob()
-        }
+        binding.btnStart.setOnClickListener { startJob() }
+        binding.btnCancel.setOnClickListener { cancelJob() }
     }
 
     private fun startJob() {
