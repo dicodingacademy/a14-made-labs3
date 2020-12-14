@@ -9,31 +9,29 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.dicoding.picodiploma.mybroadcastreceiver.databinding.ActivityMainBinding;
-
-public class MainActivity extends AppCompatActivity
-        implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String ACTION_DOWNLOAD_STATUS = "download_status";
     private final int SMS_REQUEST_CODE = 101;
 
     private BroadcastReceiver downloadReceiver;
-    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        Button btnPermission = findViewById(R.id.btn_permission);
+        Button btnDownload = findViewById(R.id.btn_download);
 
-        binding.btnPermission.setOnClickListener(this);
-        binding.btnDownload.setOnClickListener(this);
+        btnPermission.setOnClickListener(this);
+        btnDownload.setOnClickListener(this);
 
         downloadReceiver = new BroadcastReceiver() {
             @Override
@@ -63,8 +61,6 @@ public class MainActivity extends AppCompatActivity
         if (downloadReceiver != null) {
             unregisterReceiver(downloadReceiver);
         }
-
-        binding = null;
     }
 
     @Override
