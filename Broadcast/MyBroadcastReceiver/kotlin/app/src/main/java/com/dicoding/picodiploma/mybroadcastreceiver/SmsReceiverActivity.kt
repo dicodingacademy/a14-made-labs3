@@ -2,36 +2,38 @@ package com.dicoding.picodiploma.mybroadcastreceiver
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_sms_receiver.*
+import com.dicoding.picodiploma.mybroadcastreceiver.databinding.ActivitySmsReceiverBinding
 
-class SmsReceiverActivity : AppCompatActivity(), View.OnClickListener {
+class SmsReceiverActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_SMS_NO = "extra_sms_no"
         const val EXTRA_SMS_MESSAGE = "extra_sms_message"
     }
 
+    private var binding: ActivitySmsReceiverBinding? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sms_receiver)
+
+        binding = ActivitySmsReceiverBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
 
         title = getString(R.string.incoming_message)
 
-        btn_close.setOnClickListener(this)
+        binding?.btnClose?.setOnClickListener {
+            finish()
+        }
 
         val senderNo = intent.getStringExtra(EXTRA_SMS_NO)
         val senderMessage = intent.getStringExtra(EXTRA_SMS_MESSAGE)
 
-        tv_from.text = getString(R.string.from, senderNo)
-        tv_message.text = senderMessage
+        binding?.tvFrom?.text = getString(R.string.from, senderNo)
+        binding?.tvMessage?.text = senderMessage
     }
 
-    override fun onClick(v: View) {
-        if (v.id == R.id.btn_close) {
-            finish()
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null
     }
 }

@@ -44,7 +44,9 @@ class AlarmReceiver : BroadcastReceiver() {
         //Jika Anda ingin menampilkan dengan toast anda bisa menghilangkan komentar pada baris dibawah ini.
 //        showToast(context, title, message)
 
-        showAlarmNotification(context, title, message, notifId)
+        if (message != null) {
+            showAlarmNotification(context, title, message, notifId)
+        }
     }
 
     // Gunakan metode ini untuk menampilkan toast
@@ -56,12 +58,12 @@ class AlarmReceiver : BroadcastReceiver() {
     // Gunakan metode ini untuk menampilkan notifikasi
     private fun showAlarmNotification(context: Context, title: String, message: String, notifId: Int) {
 
-        val CHANNEL_ID = "Channel_1"
-        val CHANNEL_NAME = "AlarmManager channel"
+        val channelId = "Channel_1"
+        val channelName = "AlarmManager channel"
 
         val notificationManagerCompat = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+        val builder = NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.ic_access_time_black)
                 .setContentTitle(title)
                 .setContentText(message)
@@ -76,14 +78,14 @@ class AlarmReceiver : BroadcastReceiver() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             /* Create or update. */
-            val channel = NotificationChannel(CHANNEL_ID,
-                    CHANNEL_NAME,
+            val channel = NotificationChannel(channelId,
+                    channelName,
                     NotificationManager.IMPORTANCE_DEFAULT)
 
             channel.enableVibration(true)
             channel.vibrationPattern = longArrayOf(1000, 1000, 1000, 1000, 1000)
 
-            builder.setChannelId(CHANNEL_ID)
+            builder.setChannelId(channelId)
 
             notificationManagerCompat.createNotificationChannel(channel)
         }

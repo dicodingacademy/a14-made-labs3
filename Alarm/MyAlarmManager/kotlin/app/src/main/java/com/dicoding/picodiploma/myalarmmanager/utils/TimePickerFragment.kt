@@ -13,11 +13,9 @@ class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener 
 
     private var mListener: DialogTimeListener? = null
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context != null) {
-            mListener = context as DialogTimeListener?
-        }
+        mListener = context as DialogTimeListener?
     }
 
     override fun onDetach() {
