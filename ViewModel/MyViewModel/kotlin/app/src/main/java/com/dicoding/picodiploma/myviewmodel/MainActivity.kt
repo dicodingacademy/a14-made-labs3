@@ -3,29 +3,30 @@ package com.dicoding.picodiploma.myviewmodel
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_main.*
+import com.dicoding.picodiploma.myviewmodel.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: WeatherAdapter
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         adapter = WeatherAdapter()
         adapter.notifyDataSetChanged()
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = adapter
 
         mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
 
-        btnCity.setOnClickListener {
-            val city = editCity.text.toString()
+        binding.btnCity.setOnClickListener {
+            val city = binding.editCity.text.toString()
 
             if (city.isEmpty()) return@setOnClickListener
 
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             mainViewModel.setWeather(city)
         }
 
-        mainViewModel.getWeathers().observe(this, Observer { weatherItems ->
+        mainViewModel.getWeathers().observe(this, { weatherItems ->
             if (weatherItems != null) {
                 adapter.setData(weatherItems)
                 showLoading(false)
@@ -43,9 +44,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun showLoading(state: Boolean) {
         if (state) {
-            progressBar.visibility = View.VISIBLE
+            binding.progressBar.visibility = View.VISIBLE
         } else {
-            progressBar.visibility = View.GONE
+            binding.progressBar.visibility = View.GONE
         }
     }
 }

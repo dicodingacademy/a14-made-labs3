@@ -6,21 +6,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private WeatherAdapter adapter;
     private EditText edtCity;
     private ProgressBar progressBar;
-    private Button btnCity;
-
     private MainViewModel mainViewModel;
 
     @Override
@@ -30,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         edtCity = findViewById(R.id.editCity);
         progressBar = findViewById(R.id.progressBar);
-        btnCity = findViewById(R.id.btnCity);
+        Button btnCity = findViewById(R.id.btnCity);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -40,25 +34,19 @@ public class MainActivity extends AppCompatActivity {
 
         mainViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MainViewModel.class);
 
-        btnCity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String city = edtCity.getText().toString();
+        btnCity.setOnClickListener(view -> {
+            String city = edtCity.getText().toString();
 
-                if (TextUtils.isEmpty(city)) return;
+            if (TextUtils.isEmpty(city)) return;
 
-                showLoading(true);
-                mainViewModel.setWeather(city);
-            }
+            showLoading(true);
+            mainViewModel.setWeather(city);
         });
 
-        mainViewModel.getWeathers().observe(this, new Observer<ArrayList<WeatherItems>>() {
-            @Override
-            public void onChanged(ArrayList<WeatherItems> weatherItems) {
-                if (weatherItems != null) {
-                    adapter.setData(weatherItems);
-                    showLoading(false);
-                }
+        mainViewModel.getWeathers().observe(this, weatherItems -> {
+            if (weatherItems != null) {
+                adapter.setData(weatherItems);
+                showLoading(false);
             }
         });
     }
