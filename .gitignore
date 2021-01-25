@@ -85,3 +85,7 @@ Services/MyServiceApp/java/.idea/
 BackgroundThread/MyBackgroundThread/kotlin/.idea/
 
 Broadcast/MyBroadcastReceiver/java/.idea/
+
+WorkManager/MyWorkManager/kotlin/.idea/
+
+Broadcast/MyBroadcastReceiver/kotlin/.idea/

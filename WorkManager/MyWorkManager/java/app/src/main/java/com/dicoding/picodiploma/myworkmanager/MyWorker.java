@@ -42,6 +42,7 @@ public class MyWorker extends Worker {
 
     private Result getCurrentWeather(final String city) {
         Log.d(TAG, "getCurrentWeather: Mulai.....");
+        Looper.prepare();
         SyncHttpClient client = new SyncHttpClient();
         String url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APP_ID;
         Log.d(TAG, "getCurrentWeather: " + url);

@@ -42,7 +42,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation "android.arch.work:work-runtime:1.0.1"
-    implementation 'com.loopj.android:android-async-http:1.4.9'
+    implementation 'com.loopj.android:android-async-http:1.4.10'
 
 }
 repositories {

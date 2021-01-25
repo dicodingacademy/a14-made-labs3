@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.os.Build.VERSION
 import android.os.Build.VERSION_CODES
+import android.os.Looper
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.work.Worker
@@ -37,6 +38,7 @@ class MyWorker(context: Context, workerParams: WorkerParameters) : Worker(contex
 
     private fun getCurrentWeather(city: String?): Result {
         Log.d(TAG, "getCurrentWeather: Mulai.....")
+        Looper.prepare()
         val client = SyncHttpClient()
         val url = "http://api.openweathermap.org/data/2.5/weather?q=$city&appid=$APP_ID"
         Log.d(TAG, "getCurrentWeather: $url")
