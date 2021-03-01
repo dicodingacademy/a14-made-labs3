@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnOneTimeTask, btnPeriodicTask, btnCancelTask;
     EditText editCity;
     TextView textStatus;
+    private WorkManager workManager;
     private PeriodicWorkRequest periodicWorkRequest;
 
     @Override
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textStatus = findViewById(R.id.textStatus);
         btnPeriodicTask = findViewById(R.id.btnPeriodicTask);
         btnCancelTask = findViewById(R.id.btnCancelTask);
+
+        workManager = WorkManager.getInstance(this);
 
         btnOneTimeTask.setOnClickListener(this);
         btnPeriodicTask.setOnClickListener(this);
@@ -68,10 +71,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setConstraints(constraints)
                 .build();
 
-        WorkManager.getInstance().enqueue(oneTimeWorkRequest);
+        workManager.enqueue(oneTimeWorkRequest);
 
-        WorkManager.getInstance()
-                .getWorkInfoByIdLiveData(oneTimeWorkRequest.getId())
+        workManager.getWorkInfoByIdLiveData(oneTimeWorkRequest.getId())
                 .observe(MainActivity.this, workInfo -> {
                     String status = workInfo.getState().name();
                     textStatus.append("\n"+status);
@@ -94,10 +96,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setConstraints(constraints)
                 .build();
 
-        WorkManager.getInstance().enqueue(periodicWorkRequest);
+        workManager.enqueue(periodicWorkRequest);
 
-        WorkManager.getInstance()
-                .getWorkInfoByIdLiveData(periodicWorkRequest.getId())
+        workManager.getWorkInfoByIdLiveData(periodicWorkRequest.getId())
                 .observe(MainActivity.this, workInfo -> {
                     String status = workInfo.getState().name();
                     textStatus.append("\n"+status);
@@ -109,6 +110,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void cancelPeriodicTask() {
-        WorkManager.getInstance().cancelWorkById(periodicWorkRequest.getId());
+        workManager.cancelWorkById(periodicWorkRequest.getId());
     }
 }

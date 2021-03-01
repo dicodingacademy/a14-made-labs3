@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), OnClickListener {
 
+    private lateinit var workManager: WorkManager
     private lateinit var periodicWorkRequest: PeriodicWorkRequest
     private lateinit var binding: ActivityMainBinding
 
@@ -19,6 +20,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        workManager = WorkManager.getInstance(this)
 
         binding.btnOneTimeTask.setOnClickListener(this)
         binding.btnPeriodicTask.setOnClickListener(this)
@@ -45,9 +48,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 .setInputData(data)
                 .setConstraints(constraints)
                 .build()
-        WorkManager.getInstance().enqueue(oneTimeWorkRequest)
-        WorkManager.getInstance()
-                .getWorkInfoByIdLiveData(oneTimeWorkRequest.id)
+        workManager.enqueue(oneTimeWorkRequest)
+        workManager.getWorkInfoByIdLiveData(oneTimeWorkRequest.id)
                 .observe(this@MainActivity, { workInfo ->
                     val status = workInfo.state.name
                     binding.textStatus.append("\n" + status)
@@ -66,9 +68,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                 .setInputData(data)
                 .setConstraints(constraints)
                 .build()
-        WorkManager.getInstance().enqueue(periodicWorkRequest)
-        WorkManager.getInstance()
-                .getWorkInfoByIdLiveData(periodicWorkRequest.id)
+        workManager.enqueue(periodicWorkRequest)
+        workManager.getWorkInfoByIdLiveData(periodicWorkRequest.id)
                 .observe(this@MainActivity, { workInfo ->
                     val status = workInfo.state.name
                     binding.textStatus.append("\n" + status)
@@ -80,6 +81,6 @@ class MainActivity : AppCompatActivity(), OnClickListener {
     }
 
     private fun cancelPeriodicTask() {
-        WorkManager.getInstance().cancelWorkById(periodicWorkRequest.id)
+        workManager.cancelWorkById(periodicWorkRequest.id)
     }
 }
