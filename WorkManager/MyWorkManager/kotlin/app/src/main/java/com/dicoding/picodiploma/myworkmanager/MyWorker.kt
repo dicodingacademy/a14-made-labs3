@@ -14,8 +14,9 @@ import androidx.work.WorkerParameters
 import com.dicoding.picodiploma.myworkmanager.R.drawable
 import com.loopj.android.http.AsyncHttpResponseHandler
 import com.loopj.android.http.SyncHttpClient
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import cz.msebera.android.httpclient.Header
-import org.json.JSONObject
 import java.text.DecimalFormat
 
 class MyWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
@@ -46,28 +47,42 @@ class MyWorker(context: Context, workerParams: WorkerParameters) : Worker(contex
             override fun onSuccess(statusCode: Int, headers: Array<Header?>?, responseBody: ByteArray) {
                 val result = String(responseBody)
                 Log.d(TAG, result)
-                 try {
-                    val responseObject = JSONObject(result)
+                try {
+//                    val responseObject = JSONObject(result)
+//
+//                    /*
+//                    Perlu diperhatikan bahwa angka 0 pada getJSONObject menunjukkan index ke-0
+//                    Jika data yang ingin kita ambil ada lebih dari satu maka gunakanlah looping
+//                     */
+//
+//                    val currentWeather: String = responseObject.getJSONArray("weather").getJSONObject(0).getString("main")
+//                    val description: String = responseObject.getJSONArray("weather").getJSONObject(0).getString("description")
+//                    val tempInKelvin = responseObject.getJSONObject("main").getDouble("temp")
 
-                    /*
-                    Perlu diperhatikan bahwa angka 0 pada getJSONObject menunjukkan index ke-0
-                    Jika data yang ingin kita ambil ada lebih dari satu maka gunakanlah looping
-                     */
+                    val moshi = Moshi.Builder()
+                            .addLast(KotlinJsonAdapterFactory())
+                            .build()
 
-                    val currentWeather: String = responseObject.getJSONArray("weather").getJSONObject(0).getString("main")
-                    val description: String = responseObject.getJSONArray("weather").getJSONObject(0).getString("description")
-                    val tempInKelvin = responseObject.getJSONObject("main").getDouble("temp")
-                    val tempInCelcius = tempInKelvin - 273
-                    val temprature: String = DecimalFormat("##.##").format(tempInCelcius)
-                    val title = "Current Weather in $city"
-                    val message = "$currentWeather, $description with $temprature celcius"
-                    showNotification(title, message)
+                    val jsonAdapter = moshi.adapter(Response::class.java)
+                    val response = jsonAdapter.fromJson(result)
+
+                    response?.let {
+                        val currentWeather = it.weatherList[0].main
+                        val description = it.weatherList[0].description
+                        val tempInKelvin = it.main.temperature
+
+                        val tempInCelcius = tempInKelvin - 273
+                        val temprature: String = DecimalFormat("##.##").format(tempInCelcius)
+                        val title = "Current Weather in $city"
+                        val message = "$currentWeather, $description with $temprature celcius"
+                        showNotification(title, message)
+                    }
                     Log.d(TAG, "onSuccess: Selesai.....")
-                     resultStatus = Result.success()
+                    resultStatus = Result.success()
                 } catch (e: Exception) {
                     showNotification("Get Current Weather Not Success", e.message)
                     Log.d(TAG, "onSuccess: Gagal.....")
-                     resultStatus = Result.failure()
+                    resultStatus = Result.failure()
                 }
             }
 

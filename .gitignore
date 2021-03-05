@@ -89,3 +89,5 @@ Broadcast/MyBroadcastReceiver/java/.idea/
 WorkManager/MyWorkManager/kotlin/.idea/
 
 Broadcast/MyBroadcastReceiver/kotlin/.idea/
+
+WorkManager/MyWorkManager/java/.idea/
