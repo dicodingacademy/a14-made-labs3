@@ -14,8 +14,8 @@ import androidx.work.WorkerParameters;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.SyncHttpClient;
-
-import org.json.JSONObject;
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
 
 import java.text.DecimalFormat;
 
@@ -53,15 +53,23 @@ public class MyWorker extends Worker {
                 String result = new String(responseBody);
                 Log.d(TAG, result);
                 try {
-                    JSONObject responseObject = new JSONObject(result);
-
+//                    JSONObject responseObject = new JSONObject(result);
+//                    String currentWeather = responseObject.getJSONArray("weather").getJSONObject(0).getString("main");
+//                    String description = responseObject.getJSONArray("weather").getJSONObject(0).getString("description");
+//                    double tempInKelvin = responseObject.getJSONObject("main").getDouble("temp");
                     /*
                     Perlu diperhatikan bahwa angka 0 pada getJSONObject menunjukkan index ke-0
                     Jika data yang ingin kita ambil ada lebih dari satu maka gunakanlah looping
                      */
-                    String currentWeather = responseObject.getJSONArray("weather").getJSONObject(0).getString("main");
-                    String description = responseObject.getJSONArray("weather").getJSONObject(0).getString("description");
-                    double tempInKelvin = responseObject.getJSONObject("main").getDouble("temp");
+
+                    Moshi moshi = new Moshi.Builder().build();
+                    JsonAdapter<Response> jsonAdapter = moshi.adapter(Response.class);
+                    Response response = jsonAdapter.fromJson(result);
+
+                    String currentWeather = response.getWeatherList().get(0).getMain();
+                    String description = response.getWeatherList().get(0).getDescription();
+                    Double tempInKelvin = response.getMain().getTemperature();
+
 
                     double tempInCelcius = tempInKelvin - 273;
                     String temprature = new DecimalFormat("##.##").format(tempInCelcius);
