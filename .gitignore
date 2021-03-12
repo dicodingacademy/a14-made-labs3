@@ -91,3 +91,7 @@ WorkManager/MyWorkManager/kotlin/.idea/
 Broadcast/MyBroadcastReceiver/kotlin/.idea/
 
 WorkManager/MyWorkManager/java/.idea/
+
+Alarm/MyAlarmManager/java/.idea/
+
+JobScheduler/MyJobScheduler/java/.idea/caches/

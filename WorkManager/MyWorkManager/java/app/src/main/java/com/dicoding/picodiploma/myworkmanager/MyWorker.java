@@ -71,11 +71,11 @@ public class MyWorker extends Worker {
                     Double tempInKelvin = response.getMain().getTemperature();
 
 
-                    double tempInCelcius = tempInKelvin - 273;
-                    String temprature = new DecimalFormat("##.##").format(tempInCelcius);
+                    double tempInCelsius = tempInKelvin - 273;
+                    String temperature = new DecimalFormat("##.##").format(tempInCelsius);
 
                     String title = "Current Weather in "+city;
-                    String message = currentWeather + ", " + description + " with " + temprature + " celcius";
+                    String message = currentWeather + ", " + description + " with " + temperature + " celsius";
 
                     showNotification(title, message);
 

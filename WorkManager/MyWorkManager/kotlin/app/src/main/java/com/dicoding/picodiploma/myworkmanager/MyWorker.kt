@@ -4,14 +4,12 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
-import android.os.Build.VERSION
-import android.os.Build.VERSION_CODES
+import android.os.Build
 import android.os.Looper
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import com.dicoding.picodiploma.myworkmanager.R.drawable
 import com.loopj.android.http.AsyncHttpResponseHandler
 import com.loopj.android.http.SyncHttpClient
 import com.squareup.moshi.Moshi
@@ -71,10 +69,10 @@ class MyWorker(context: Context, workerParams: WorkerParameters) : Worker(contex
                         val description = it.weatherList[0].description
                         val tempInKelvin = it.main.temperature
 
-                        val tempInCelcius = tempInKelvin - 273
-                        val temprature: String = DecimalFormat("##.##").format(tempInCelcius)
+                        val tempInCelsius = tempInKelvin - 273
+                        val temperature: String = DecimalFormat("##.##").format(tempInCelsius)
                         val title = "Current Weather in $city"
-                        val message = "$currentWeather, $description with $temprature celcius"
+                        val message = "$currentWeather, $description with $temperature celsius"
                         showNotification(title, message)
                     }
                     Log.d(TAG, "onSuccess: Selesai.....")
@@ -99,12 +97,12 @@ class MyWorker(context: Context, workerParams: WorkerParameters) : Worker(contex
     private fun showNotification(title: String, description: String?) {
         val notificationManager = applicationContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val notification: NotificationCompat.Builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
-                .setSmallIcon(drawable.ic_notifications_black_24dp)
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                 .setContentTitle(title)
                 .setContentText(description)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
-        if (VERSION.SDK_INT >= VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)
             notification.setChannelId(CHANNEL_ID)
             notificationManager.createNotificationChannel(channel)
