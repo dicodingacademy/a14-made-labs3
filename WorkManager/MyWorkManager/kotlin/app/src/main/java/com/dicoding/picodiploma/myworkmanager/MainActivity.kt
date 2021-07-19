@@ -6,7 +6,6 @@ import android.view.View.OnClickListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.work.*
 import androidx.work.Data.Builder
-import androidx.work.WorkInfo.State
 import com.dicoding.picodiploma.myworkmanager.databinding.ActivityMainBinding
 import java.util.concurrent.TimeUnit
 
@@ -74,7 +73,7 @@ class MainActivity : AppCompatActivity(), OnClickListener {
                     val status = workInfo.state.name
                     binding.textStatus.append("\n" + status)
                     binding.btnCancelTask.isEnabled = false
-                    if (workInfo.state == State.ENQUEUED) {
+                    if (workInfo.state == WorkInfo.State.ENQUEUED) {
                         binding.btnCancelTask.isEnabled = true
                     }
                 })
